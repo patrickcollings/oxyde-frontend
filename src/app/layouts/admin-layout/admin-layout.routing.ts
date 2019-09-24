@@ -14,6 +14,7 @@ import { TrainingComponent } from '@app/training/training.component';
 import { CreateCampaignComponent } from '@app/create-campaign/create-campaign.component';
 
 export const AdminLayoutRoutes: Routes = [
+    { path: '',                 redirectTo: 'dashboard' },
     { path: 'dashboard',        component: DashboardComponent },
     { path: 'campaigns',        component: CampaignsComponent },
     { path: 'campaigns/create', component: CreateCampaignComponent },

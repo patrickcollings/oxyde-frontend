@@ -12,17 +12,16 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
-  {
     path: '', component: AdminLayoutComponent, canActivate: [AuthGuard],
     loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
   },
+  {
+    path: 'about',
+    component: LandingPageComponent,
+    pathMatch: 'full'
+  },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'about', component: LandingPageComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'about' }
 ];
