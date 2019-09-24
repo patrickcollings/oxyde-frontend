@@ -1,0 +1,20 @@
+
+.metric-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.campaign-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.campaign-title {
+    flex-grow: 1;
+}
+
+.campaign-header p {
+    margin: 0 1em;
+}

@@ -1,0 +1,12 @@
+.action-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-title {
+    flex-grow: 1;
+}
+
+.action-header p {
+    margin: 0 1em;
+}

@@ -1,0 +1,150 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row" [hidden]="!campaign">
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        <div class="ct-chart" id="dailySalesChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Emails evaded</h4>
+                        <p class="card-category">
+                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase on last week.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> updated 4 minutes ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-warning">
+                        <div class="ct-chart" id="websiteViewsChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Emails failed</h4>
+                        <p class="card-category">Last Campaign Performance</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> updated 4 minutes ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-danger">
+                        <div class="ct-chart" id="completedTasksChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Completed Training Modules</h4>
+                        <p class="card-category">Module Performance</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> updated 2 days ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">schedule</i>
+                        </div>
+                        <a class="card-category" [routerLink]="['/campaigns']">View</a>
+                        <h5 class="card-title">Campaign Summary</h5>
+                    </div>
+                    <div class="card-body" *ngIf="campaign">
+                        <mat-list>
+                            <!-- <h3 mat-subheader>Score</h3> -->
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Company Score</h5>
+                                    <p class="font-weight-bold" class="font-weight-bold">64%</p>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Time remaining</h5>
+                                    <p class="font-weight-bold">7 weeks</p>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Average employee score</h5>
+                                    <p class="font-weight-bold">86%</p>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="card-footer" *ngIf="!campaign">
+                        <div class="stats">
+                            <!-- <i class="material-icons text-danger">warning</i> -->
+                            <p>No campaign started. Create one <a [routerLink]="['/campaigns/create']">here.</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+
+                <!-- Campaign Metric Card -->
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">supervisor_account</i>
+                        </div>
+                        <a class="card-category" [routerLink]="['/campaigns']">View</a>
+                        <h5 class="card-title">Employee Summary</h5>
+                    </div>
+                    <div class="card-body" *ngIf="employees.length > 0">
+                        <mat-list>
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Average Score</h5>
+                                    <p class="font-weight-bold" class="font-weight-bold">64%</p>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Total emails caught</h5>
+                                    <p class="font-weight-bold">74</p>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5>Total emails evaded</h5>
+                                    <p class="font-weight-bold">15</p>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="card-footer" *ngIf="employees.length === 0">
+                        <div class="stats">
+                            <!-- <i class="material-icons text-danger">warning</i> -->
+                            <p>No employees found. Add them <a [routerLink]="['/employees']">here.</a></p>
+                        </div>
+                    </div>
+                    <!-- /Campaign Metric Card -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

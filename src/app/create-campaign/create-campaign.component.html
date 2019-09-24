@@ -1,0 +1,54 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid">
+          <mat-vertical-stepper [linear]="true">
+            <mat-step [stepControl]="employeeForm" label="Select your employees">
+              <form [formGroup]="employeeForm">
+                <!-- List of employees to select -->
+                <mat-selection-list formControlName="employees">
+                  <mat-list-option [value]="employee._id" *ngFor="let employee of employees">{{ employee.firstName }}
+                    {{ employee.lastName }}</mat-list-option>
+                </mat-selection-list>
+                <a routerLink="/employees">Add more employees?</a>
+                <div>
+                  <button mat-button matStepperNext [disabled]="!employeeForm.valid">Next Section</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="detailForm" label="Choose campaign details">
+              <!-- Name -->
+              <form [formGroup]="detailForm">
+                <mat-form-field>
+                  <input matInput placeholder="Campaign Name" type="text" formControlName="campaignName" class=""
+                    [ngClass]="{ 'is-invalid': submitted && f.campaignName.errors }" />
+                </mat-form-field>
+                <!-- <div *ngIf="submitted && f.campaignName.errors" class="invalid-feedback"> -->
+                <!-- <div *ngIf="f.campaignName.errors.required">Campaign name is required</div> -->
+                <!-- </div> -->
+                <div>
+                  <button mat-button matStepperPrevious>Previous Section</button>
+                  <button mat-button matStepperNext [disabled]="!detailForm.valid">Next Section</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="lengthForm" label="Select campaign length">
+              <!-- Select length -->
+              <p>Select the length of your campaign (weeks)</p>
+              <form [formGroup]="lengthForm">
+                <mat-slider formControlName="length" class="w-100" [max]="26" [min]="3" [step]="1" thumbLabel
+                  [tickInterval]="1">
+                </mat-slider>
+                <div>
+                  <button mat-raised-button [disabled]="!lengthForm.valid" color="primary" type="submit"
+                    (click)="submit()">Create Campaign</button>
+                </div>
+              </form>
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
