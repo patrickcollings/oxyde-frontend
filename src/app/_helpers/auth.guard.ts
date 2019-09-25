@@ -8,26 +8,23 @@ export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService
-    ) {}
+    ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
             // authorised so return true
             return true;
-        }  
+        }
 
         console.log("Auth guard");
 
         console.log(state.url);
 
         // not logged in so redirect to login page with the return url
-        if (state.url === '/') {
-            this.router.navigate(['/about']);
-            return false;
-        } else {
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-            return false;
-        }
+        this.router.navigate(['/about']);
+        return false;
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+        // return false;
     }
 }
