@@ -28,8 +28,10 @@ import {
   MatSliderModule,
   MatStepperModule
 } from '@angular/material';
+import { Ng5SliderModule } from 'ng5-slider';
 import { ReportsComponent } from '../../reports/reports.component';
 import { TrainingComponent } from '../../training/training.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +46,9 @@ import { TrainingComponent } from '../../training/training.component';
     MatTooltipModule,
     MatListModule,
     MatSliderModule,
-    MatStepperModule
+    MatStepperModule,
+    Ng5SliderModule,
+    MatButtonToggleModule
   ],
   declarations: [
     CampaignsComponent,
@@ -62,4 +66,4 @@ import { TrainingComponent } from '../../training/training.component';
   ]
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

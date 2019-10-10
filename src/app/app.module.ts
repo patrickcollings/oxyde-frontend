@@ -54,7 +54,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    MatListModule
+    MatListModule,
   ],
   declarations: [
     AppComponent,

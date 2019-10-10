@@ -3,3 +3,5 @@
     font-family: lato;
     src: url(assets/font/Lato.otf) format("opentype");
 }
+
+@import "~nouislider/distribute/nouislider.min.css";

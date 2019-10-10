@@ -126,9 +126,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let employee of employees">
-                    <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+                    <td>{{ employee.id.firstName }} {{ employee.id.lastName }}</td>
+                    <td>{{ employee.caught }}</td>
                     <td>0</td>
-                    <td>3</td>
                   </tr>
                 </tbody>
               </table>
