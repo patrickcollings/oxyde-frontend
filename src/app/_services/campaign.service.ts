@@ -14,8 +14,8 @@ export class CampaignService {
         private http: HttpClient,
     ) { }
 
-    public create(name: string, length: number, employees: Employee[]) {
-        return this.http.post(`${environment.apiUrl}/campaign`, {name, length, employees});
+    public create(name: string, length: number, employees: Employee[], domain: string, emailProvider: string, companyName: string) {
+        return this.http.post<Campaign>(`${environment.apiUrl}/campaign`, {name, length, employees, domain, emailProvider, companyName});
     } 
 
     /**

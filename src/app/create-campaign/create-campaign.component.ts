@@ -163,20 +163,32 @@ export class CreateCampaignComponent implements OnInit {
     console.log(detailValue);
     console.log(quizValue);
 
-    // this.campaignService.create(detailValue.campaignName, 12, employeeValue.employees)
-    //   .pipe(first())
-    //   .subscribe(
-    //     res => {
-    //       console.log(res);
-    //       if (Object.keys(res).length === 0) {
-    //         this.router.navigateByUrl('/campaigns');
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       this.alertService.error(error);
-    //     }
-    //   )
+    const testData = { 
+      name: "Patrick",
+      link: "OpeningLink",
+      corporation: "Oxyde",
+      managerName: "Marcus",
+      campaignLength: 2,
+      emailProvider: "Outlook",
+
+    }
+
+
+
+    this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, quizValue.companyDomain, quizValue.emailProvider, quizValue.companyName)
+      .pipe(first())
+      .subscribe(
+        res => {
+          console.log(res);
+          if (Object.keys(res).length === 0) {
+            this.router.navigateByUrl('/campaigns');
+          }
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+        }
+      )
   }
 
 }

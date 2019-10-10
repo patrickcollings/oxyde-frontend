@@ -9,5 +9,7 @@ export class Campaign {
     }];
     phished: Number;
     avoided: Number;
+    domain: String;
+    emailProvider: String;
     _id: number;
 }
