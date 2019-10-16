@@ -15,7 +15,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { EmployeesComponent } from '../../employees/employees.component';
-
+import { SetupComponent } from '@app/setup/setup.component';
 
 import {
   MatButtonModule,
@@ -63,6 +63,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     ReportsComponent,
     TrainingComponent,
     CreateCampaignComponent,
+    SetupComponent
   ]
 })
 
