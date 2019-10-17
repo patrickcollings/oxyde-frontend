@@ -32,6 +32,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { ReportsComponent } from '../../reports/reports.component';
 import { TrainingComponent } from '../../training/training.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { WhitelistFormComponent } from '../../setup/whitelist-form/whitelist-form.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -63,7 +64,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     ReportsComponent,
     TrainingComponent,
     CreateCampaignComponent,
-    SetupComponent
+    SetupComponent,
+    WhitelistFormComponent
   ]
 })
 

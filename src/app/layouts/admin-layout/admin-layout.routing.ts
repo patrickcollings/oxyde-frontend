@@ -13,6 +13,7 @@ import { ReportsComponent } from '@app/reports/reports.component';
 import { TrainingComponent } from '@app/training/training.component';
 import { CreateCampaignComponent } from '@app/create-campaign/create-campaign.component';
 import { SetupComponent } from '@app/setup/setup.component';
+import { WhitelistFormComponent } from '@app/setup/whitelist-form/whitelist-form.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',                 redirectTo: 'dashboard' },
@@ -29,4 +30,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',    component: NotificationsComponent },
     { path: 'upgrade',          component: UpgradeComponent },
     { path: 'setup',            component: SetupComponent },
+    { path: 'setup/whitelist',  component: WhitelistFormComponent },
 ];
