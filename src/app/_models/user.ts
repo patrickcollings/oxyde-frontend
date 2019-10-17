@@ -8,4 +8,5 @@ export class User {
     lastName: string;
     token: string;
     employees: Employee[];
+    whitelistingSetup: boolean;
 }

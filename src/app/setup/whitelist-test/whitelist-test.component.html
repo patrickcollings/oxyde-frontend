@@ -1,0 +1,17 @@
+<div class="main-content my-content">
+  <div class="container-fluid whitelist-container d-flex flex-column">
+    <div class="card flex-grow-1">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">Test your email servers</h4>
+        <p class="card-category">We will send you a mock email to ensure our simulated attacks get through.</p>
+      </div>
+      <div class="card-body">
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Email Address" [(ngModel)]="email" name="email">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="sendTest()">Send Test Email</button>
+        <button mat-raised-button color="primary" (click)="complete()">Email successful</button>
+      </div>
+    </div>
+  </div>
+</div>

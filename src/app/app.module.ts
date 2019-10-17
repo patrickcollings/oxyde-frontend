@@ -26,6 +26,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthenticationService } from './_services/authentication.service';
+import { EmailService } from './_services/email.service';
 import {
   MatButtonModule,
   MatInputModule,
@@ -67,6 +68,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    EmailService,
   ],
   bootstrap: [AppComponent]
 })

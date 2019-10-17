@@ -14,6 +14,7 @@ import { TrainingComponent } from '@app/training/training.component';
 import { CreateCampaignComponent } from '@app/create-campaign/create-campaign.component';
 import { SetupComponent } from '@app/setup/setup.component';
 import { WhitelistFormComponent } from '@app/setup/whitelist-form/whitelist-form.component';
+import { WhitelistTestComponent } from '@app/setup/whitelist-test/whitelist-test.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',                 redirectTo: 'dashboard' },
@@ -31,4 +32,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',          component: UpgradeComponent },
     { path: 'setup',            component: SetupComponent },
     { path: 'setup/whitelist',  component: WhitelistFormComponent },
+    { path: 'setup/test',       component: WhitelistTestComponent },
 ];

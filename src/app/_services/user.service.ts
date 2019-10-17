@@ -12,4 +12,12 @@ export class UserService {
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/manager/register`, user);
     }
+
+    updateWhitelistingSetup(whitelistingSetup: boolean) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { whitelistingSetup });
+    }
+
+    updateEmailTesting(emailTest: boolean) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { emailTest });
+    }
 }

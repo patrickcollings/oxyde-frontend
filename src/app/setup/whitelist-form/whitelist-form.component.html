@@ -1,27 +1,119 @@
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header card-header-danger">
+<div class="main-content my-content">
+  <div class="container-fluid whitelist-container d-flex flex-column">
+    <div class="card flex-grow-1">
+      <div class="card-header card-header-danger d-flex justify-content-between">
         <h4 class="card-title">Whitelist your email server</h4>
-        <p class="card-category">Follow our guide below to whitelist your email server:</p>
-        <p>Restart</p>
+        <button mat-button (click)="restart()">Restart</button>
+        <!-- <p class="card-category">Follow our guide below to whitelist your email server:</p> -->
       </div>
       <div class="card-body">
         <!-- Choose whether cloud protected or not -->
-        <div class="" *ngIf="">
-          <p>Is your mail server protected by cloud software?</p>
+        <div class="typeform-container" [@slideInOut]="formStates[0]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>Is your mail server protected by cloud software?</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(1, 0)">No</button>
+              <button mat-raised-button (click)="goTo(8, 0)">Yes</button>
+            </div>
+          </div>
         </div>
-        <!-- Choose email server -->
-        <div class="">
-          <p>Select your mail server</p>
+        <div class="typeform-container" [@slideInOut]="formStates[1]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>What mail server do you use?</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(2, 1)">Exchange</button>
+              <button mat-raised-button (click)="goTo(6, 1)">Office 365</button>
+              <button mat-raised-button (click)="goTo(7, 1)">Gsuite</button>
+              <button mat-raised-button (click)="goTo(8, 1)">Other</button>
+            </div>
+          </div>
         </div>
-        <!-- Choose type of email server -->
-        <div class="">
-          <p>Choose type of mail server</p>
+        <div class="typeform-container" [@slideInOut]="formStates[2]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>Which Exchange version do you use?</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(3, 2)">2007</button>
+              <button mat-raised-button (click)="goTo(4, 2)">2010</button>
+              <button mat-raised-button (click)="goTo(5, 2)">Other</button>
+            </div>
+          </div>
         </div>
-        <!-- View results -->
-        <div class="">
-          <p>Click the link below to see how to whitelist our servers.</p>
+        <div class="typeform-container" [@slideInOut]="formStates[3]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>2007 Exchange:</p>
+              <p>Follow this link to whitelist our business</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(2, 3)">Back</button>
+              <!-- <button mat-raised-button (click)="goTo(5, 4)">Yes</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="typeform-container" [@slideInOut]="formStates[4]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>2010 Exchange:</p>
+              <p>Follow this link to whitelist our business</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(2, 4)">Back</button>
+              <!-- <button mat-raised-button (click)="goTo(5, 4)">Yes</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="typeform-container" [@slideInOut]="formStates[5]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>All other exchanges:</p>
+              <p>Follow this link to whitelist our business</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(2, 5)">Back</button>
+              <!-- <button mat-raised-button (click)="goTo(5, 4)">Yes</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="typeform-container" [@slideInOut]="formStates[6]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>Office 365</p>
+              <p>Whitelist us via the link</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(1, 6)">Back</button>
+              <!-- <button mat-raised-button (click)="goTo(5, 4)">Yes</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="typeform-container" [@slideInOut]="formStates[7]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>Gsuite</p>
+              <p>White us via the link</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(1, 7)">Back</button>
+              <!-- <button mat-raised-button (click)="goTo(5, 4)">Yes</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="typeform-container" [@slideInOut]="formStates[8]">
+          <div class="question-container col-md-6">
+            <div class="question-title">
+              <p>Please contact the tech support for your provider in order to whitelist our servers.</p>
+            </div>
+            <div class="question-options">
+              <button mat-raised-button (click)="goTo(0, 8)">Back</button>
+              <button mat-raised-button (click)="complete()">Complete</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
