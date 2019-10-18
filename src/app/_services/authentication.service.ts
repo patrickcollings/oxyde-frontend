@@ -43,13 +43,10 @@ export class AuthenticationService {
     getCurrent() {
         return this.http.get<any>(`${environment.apiUrl}/manager/current`)
             .pipe(map(user => {
-                console.log('Refreshing user');
-                user.token = this.currentUserValue.token; // Reuse token
+                user.token = this.currentUserValue.token; // Reuse previous token
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.removeItem('currentUser');
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
-                console.log(user);
                 return user;    
         }));
     }
