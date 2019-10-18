@@ -23,3 +23,21 @@
             max-width: 70px !important;
         }
 }
+
+.template-list-item:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+::ng-deep .mat-button-toggle-label-content {
+    width: 100%;
+}
+
+.selected-template {
+    background-color: #fafafa;
+    font-weight: bold;
+}
+
+#template-preview-frame {
+    pointer-events: none;
+}

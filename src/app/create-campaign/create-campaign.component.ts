@@ -10,6 +10,22 @@ import { Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 import { EmailService } from '@app/_services/email.service';
 import { Template } from '@app/_models/template';
+import * as Handlebars from 'handlebars/dist/cjs/handlebars';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+interface ITemplate {
+  id: string;
+  name: string;
+  versions: [
+    {
+      id: string;
+      name: string;
+      subject: string;
+      template_id: string;
+      test_data: Object;
+    }
+  ]
+}
 
 @Component({
   selector: 'app-create-campaign',
@@ -21,11 +37,19 @@ export class CreateCampaignComponent implements OnInit {
   employees = [];
 
   templates: Template[];
+  selectedTemplate: Template;
+  templateHTML: SafeHtml;
+  compiledTemplate: any;
+
+  testEmail: string;
+
+  objectkeys = Object.keys;
 
   employeeForm: FormGroup;
   detailForm: FormGroup;
   lengthForm: FormGroup;
   quizForm: FormGroup;
+  templateForm: FormGroup;
 
   sectorOptions = [
     'Accountancy, banking and finance',
@@ -65,23 +89,23 @@ export class CreateCampaignComponent implements OnInit {
     step: 1,
     showTicks: true,
     stepsArray: [
-      {value: 5, legend: '5am'},
-      {value: 6},
-      {value: 7, legend: '7am'},
-      {value: 8},
-      {value: 9, legend: '9am'},
-      {value: 10},
-      {value: 11, legend: '11am'},
-      {value: 12},
-      {value: 13, legend: '1pm'},
-      {value: 14},
-      {value: 15, legend: '3pm'},
-      {value: 16},
-      {value: 17, legend: '5pm'},
-      {value: 18},
-      {value: 19, legend: '7pm'},
-      {value: 20},
-      {value: 21, legend: '9pm'}
+      { value: 5, legend: '5am' },
+      { value: 6 },
+      { value: 7, legend: '7am' },
+      { value: 8 },
+      { value: 9, legend: '9am' },
+      { value: 10 },
+      { value: 11, legend: '11am' },
+      { value: 12 },
+      { value: 13, legend: '1pm' },
+      { value: 14 },
+      { value: 15, legend: '3pm' },
+      { value: 16 },
+      { value: 17, legend: '5pm' },
+      { value: 18 },
+      { value: 19, legend: '7pm' },
+      { value: 20 },
+      { value: 21, legend: '9pm' }
     ],
     hideLimitLabels: true,
     hidePointerLabels: true
@@ -93,11 +117,11 @@ export class CreateCampaignComponent implements OnInit {
     step: 1,
     showTicks: true,
     stepsArray: [
-      {value: 1, legend: 'Easy'},
-      {value:2},
-      {value:3, legend: 'Medium'},
-      {value:4},
-      {value:5, legend: 'Hard'}
+      { value: 1, legend: 'Easy' },
+      { value: 2 },
+      { value: 3, legend: 'Medium' },
+      { value: 4 },
+      { value: 5, legend: 'Hard' }
     ],
   }
 
@@ -113,10 +137,15 @@ export class CreateCampaignComponent implements OnInit {
     private campaignService: CampaignService,
     private alertService: AlertService,
     private router: Router,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private sanitizer: DomSanitizer
   ) {
 
     this.currentUser = this.authenticationService.currentUserValue;
+    this.selectedTemplate = new Template();
+    console.log(this.selectedTemplate);
+
+    this.testEmail = this.currentUser.username;
 
     // Create Employee Form
     this.employeeForm = this.formBuilder.group({
@@ -127,11 +156,17 @@ export class CreateCampaignComponent implements OnInit {
     this.detailForm = this.formBuilder.group({
       campaignName: new FormControl('', Validators.required),
       length: new FormControl(1, Validators.required),
+      templateId: new FormControl('', Validators.required)
     });
 
     // Create length form
     this.lengthForm = this.formBuilder.group({
 
+    });
+
+    this.templateForm = this.formBuilder.group({
+      domain: new FormControl('', Validators.required),
+      fromName: new FormControl('', Validators.required)
     });
 
     // Create Quiz form
@@ -162,9 +197,52 @@ export class CreateCampaignComponent implements OnInit {
     })
   }
 
-  sendTest() {
-    console.log('Sending test email');
+  selectTemplate(id) {
+    console.log(id);
+    this.detailForm.controls.templateId.setValue(id);
+    // Get template
+    this.emailService.getTemplate(id).pipe(first()).subscribe(res => {
+      // let tempString = JSON.parse(res['template'].versions[0].test_data);
+      this.selectedTemplate = res['template'];
+      this.selectedTemplate.versions[0].test_data = JSON.parse(res['template'].versions[0].test_data);
+      // Update template form controls
+      Object.keys(this.selectedTemplate.versions[0].test_data).forEach(key => {
+        this.templateForm.addControl(key, new FormControl('', Validators.required));
+      });
+      // Compile email template
+      this.compiledTemplate = Handlebars.compile(this.selectedTemplate.versions[0].html_content);
+      this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(this.selectedTemplate.versions[0].test_data));
+    })
+  }
 
+  refreshHTMLPreview() {
+    // Create new context
+    let context = {};
+    Object.keys(this.templateForm.value).forEach(value => {
+      // Check if value is empty
+      context[value] = this.templateForm.value[value];
+      
+    });
+    
+    this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(context));
+  }
+
+  sendTest() {
+    // Get quiz details to fill test
+    let quiz = this.quizForm.value;
+    console.log(quiz);
+    const params = {
+      email: this.testEmail,
+      domain: quiz.companyDomain,
+      templateId: this.selectedTemplate.id,
+      managerName: quiz.managerName,
+      dynamic_template_data: this.selectedTemplate.versions[0].test_data
+    }
+
+    console.log(params);
+    this.emailService.sendEmail(params).pipe(first()).subscribe(res => {
+      console.log(res);
+    })
   }
 
   submit() {
@@ -173,12 +251,14 @@ export class CreateCampaignComponent implements OnInit {
     const employeeValue = this.employeeForm.value;
     const detailValue = this.detailForm.value;
     const quizValue = this.quizForm.value;
+    const templateValue = this.templateForm.value;
 
     console.log(employeeValue);
     console.log(detailValue);
     console.log(quizValue);
+    console.log(templateValue);
 
-    const testData = { 
+    const testData = {
       name: "Patrick",
       link: "OpeningLink",
       corporation: "Oxyde",
@@ -187,22 +267,22 @@ export class CreateCampaignComponent implements OnInit {
       emailProvider: "Outlook",
     }
 
+    console.log('Creating campaign');
 
-
-    this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, quizValue.companyDomain, quizValue.emailProvider, quizValue.companyName)
-      .pipe(first())
-      .subscribe(
-        res => {
-          console.log(res);
-          if (Object.keys(res).length === 0) {
-            this.router.navigateByUrl('/campaigns');
-          }
-        },
-        error => {
-          console.log(error);
-          this.alertService.error(error);
-        }
-      )
+    // this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, quizValue.companyDomain, quizValue.emailProvider, quizValue.companyName)
+    //   .pipe(first())
+    //   .subscribe(
+    //     res => {
+    //       console.log(res);
+    //       if (Object.keys(res).length === 0) {
+    //         this.router.navigateByUrl('/campaigns');
+    //       }
+    //     },
+    //     error => {
+    //       console.log(error);
+    //       this.alertService.error(error);
+    //     }
+    //   )
   }
 
 }

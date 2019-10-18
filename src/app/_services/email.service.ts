@@ -29,6 +29,10 @@ export class EmailService {
     return this.http.post(`${environment.apiUrl}/email/send`, body);
   }
 
+  sendEmail(params: Object) {
+    return this.http.post(`${environment.apiUrl}/email/sendtest`, params);
+  }
+
   getTemplates() {
     return this.http.get(`${environment.apiUrl}/email/templates`);
   }

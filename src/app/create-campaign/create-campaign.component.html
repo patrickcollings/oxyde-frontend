@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="container-fluid">
-          <mat-horizontal-stepper [linear]="true">
+          <mat-horizontal-stepper [linear]="false">
             <mat-step [stepControl]="employeeForm" label="Select employees">
               <form [formGroup]="employeeForm">
                 <!-- List of employees to select -->
@@ -84,32 +84,102 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="detailForm" label="Campaign Details">
+            <mat-step label="Select Template">
+
+              <!-- Select the template required here: -->
+              <h2>Select your template</h2>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-info">
+                    <th>Template Name</th>
+                    <th>Description</th>
+                    <th>Subject Line</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let template of templates" class="template-list-item"
+                      [class.selected-template]="(selectedTemplate.id === template.id)"
+                      (click)="selectTemplate(template.id)">
+                      <td class="column-grow">{{ template.name }}</td>
+                      <td class="column-grow">{{ template.versions[0].name }}</td>
+                      <td class="column-grow">{{ template.versions[0].subject }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <button mat-button matStepperPrevious>Previous Section</button>
+                <button mat-button matStepperNext>Next Section</button>
+                <!-- <button mat-button matStepperNext [disabled]="!detailForm.valid">Next Section</button> -->
+              </div>
+
+            </mat-step>
+            <mat-step [stepControl]="templateForm" label="Template Parameters">
+
+              <!-- <div class="html-preview" [innerHTML]="templateHTML"></div> -->
+              <form [formGroup]="templateForm">
+                <!-- Display list of inputs -->
+                <!-- <h4>Configurable params</h4> -->
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                      <div *ngFor="let control of templateForm.controls | keyvalue">
+                        <mat-form-field>
+                          <!-- <label>{{ control.key }}</label> -->
+                          <input matInput formControlName="{{control.key}}" type="text" [placeholder]="control.key"
+                            (change)="refreshHTMLPreview()">
+                        </mat-form-field>
+                      </div>
+                      <div class="d-flex justify-content-between w-100">
+                        <button mat-button matStepperPrevious>Previous</button>
+                        <button mat-button matStepperNext>Next</button>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 mb-0">
+                      <mat-divider></mat-divider>
+                      <h3 class="text-center">Preview</h3>
+                      <h4>{{ selectedTemplate.versions[0].subject }}</h4>
+                      <p class="mb-0">{{ templateForm.controls.fromName.value }}
+                        &lt;{{ templateForm.controls.domain.value }}&gt;</p>
+                      <iframe id="template-preview-frame" width="100%" height="800px" [srcdoc]="templateHTML"
+                        frameborder="none" scrolling="no"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="detailForm" label="Final Step">
               <!-- Select length -->
               <form [formGroup]="detailForm">
                 <mat-form-field>
                   <input matInput placeholder="Campaign Name" type="text" formControlName="campaignName" class="" />
                 </mat-form-field>
+                <!-- Campaign Length -->
                 <p>Campaign Length (weeks)</p>
                 <mat-slider formControlName="length" class="w-100" [max]="6" [min]="1" [step]="1" thumbLabel
                   [tickInterval]="1">
                 </mat-slider>
-
+                <!-- Test campaign -->
+                <h4>Preview your campaign email by sending it to yourself:</h4>
+                <div class="container">
+                  <div class="row d-flex justify-content-between w-100">
+                    <div class="col-md-8">
+                      <mat-form-field class="w-100">
+                        <input matInput placeholder="Email Address" [(ngModel)]="testEmail" name="email"
+                          [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <button mat-raised-button (click)="sendTest()">Send Test Email</button>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <button mat-button matStepperPrevious>Previous Section</button>
                   <button mat-button matStepperNext>Next Section</button>
                   <!-- <button mat-button matStepperNext [disabled]="!detailForm.valid">Next Section</button> -->
                 </div>
-
-
               </form>
-            </mat-step>
-            <mat-step label="Preview">
-              <!-- Select length -->
-              <p>Preview email</p>
-              <div>
-                <button mat-raised-button color="primary" type="submit" (click)="submit()">Create Campaign</button>
-              </div>
             </mat-step>
           </mat-horizontal-stepper>
         </div>
