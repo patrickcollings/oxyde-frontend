@@ -205,6 +205,12 @@ export class CreateCampaignComponent implements OnInit {
       // let tempString = JSON.parse(res['template'].versions[0].test_data);
       this.selectedTemplate = res['template'];
       this.selectedTemplate.versions[0].test_data = JSON.parse(res['template'].versions[0].test_data);
+      // Remove old form controls
+      Object.keys(this.templateForm.controls).forEach(control => {
+        if (control !== 'domain' && control !== 'fromName') {
+          this.templateForm.removeControl(control);
+        }
+      })
       // Update template form controls
       Object.keys(this.selectedTemplate.versions[0].test_data).forEach(key => {
         this.templateForm.addControl(key, new FormControl('', Validators.required));
@@ -219,11 +225,9 @@ export class CreateCampaignComponent implements OnInit {
     // Create new context
     let context = {};
     Object.keys(this.templateForm.value).forEach(value => {
-      // Check if value is empty
       context[value] = this.templateForm.value[value];
-      
     });
-    
+    // Compile handlebar into safe html with new context
     this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(context));
   }
 
