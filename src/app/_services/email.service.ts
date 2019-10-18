@@ -26,8 +26,14 @@ export class EmailService {
       email
     }
 
-    console.log(body);
-
     return this.http.post(`${environment.apiUrl}/email/send`, body);
+  }
+
+  getTemplates() {
+    return this.http.get(`${environment.apiUrl}/email/templates`);
+  }
+
+  getTemplate(id: string) {
+    return this.http.get(`${environment.apiUrl}/email/template/${id}`);
   }
 }

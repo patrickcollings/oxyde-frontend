@@ -8,6 +8,8 @@ import { AlertService } from '@app/_services/alert.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Options } from 'ng5-slider';
+import { EmailService } from '@app/_services/email.service';
+import { Template } from '@app/_models/template';
 
 @Component({
   selector: 'app-create-campaign',
@@ -17,6 +19,8 @@ import { Options } from 'ng5-slider';
 export class CreateCampaignComponent implements OnInit {
   currentUser: User;
   employees = [];
+
+  templates: Template[];
 
   employeeForm: FormGroup;
   detailForm: FormGroup;
@@ -108,7 +112,8 @@ export class CreateCampaignComponent implements OnInit {
     private employeeService: EmployeeService,
     private campaignService: CampaignService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private emailService: EmailService
   ) {
 
     this.currentUser = this.authenticationService.currentUserValue;
@@ -150,6 +155,16 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Get templates
+    this.emailService.getTemplates().pipe(first()).subscribe(res => {
+      this.templates = res['templates'].templates;
+      console.log(this.templates);
+    })
+  }
+
+  sendTest() {
+    console.log('Sending test email');
+
   }
 
   submit() {
@@ -170,7 +185,6 @@ export class CreateCampaignComponent implements OnInit {
       managerName: "Marcus",
       campaignLength: 2,
       emailProvider: "Outlook",
-
     }
 
 
