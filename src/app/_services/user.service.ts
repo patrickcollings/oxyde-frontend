@@ -20,4 +20,8 @@ export class UserService {
     updateEmailTesting(emailTest: boolean) {
         return this.http.put(`${environment.apiUrl}/manager/current`, { emailTest });
     }
+
+    verify(token: string) {
+        return this.http.post(`${environment.apiUrl}/manager/verify`, { token });
+    }
 }

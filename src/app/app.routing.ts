@@ -9,6 +9,7 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SignupComponent } from './signup/signup.component';
+import { VerifyComponent } from './verify/verify.component';
 
 const routes: Routes = [
   {
@@ -20,8 +21,9 @@ const routes: Routes = [
     component: LandingPageComponent,
     pathMatch: 'full'
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login',  component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'verify', component: VerifyComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'about' }
 ];

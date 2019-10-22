@@ -39,6 +39,7 @@ import { MatListModule } from '@angular/material/list';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { VerifyComponent } from './verify/verify.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -63,6 +64,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
     LoginComponent,
     SignupComponent,
     LandingPageComponent,
+    VerifyComponent,
   ],
   providers: [
     AuthenticationService,
