@@ -114,33 +114,67 @@
 
             </mat-step>
             <mat-step [stepControl]="templateForm" label="Template Parameters">
-
-              <!-- <div class="html-preview" [innerHTML]="templateHTML"></div> -->
-              <form [formGroup]="templateForm">
-                <!-- Display list of inputs -->
-                <!-- <h4>Configurable params</h4> -->
+              <form [formGroup]="senderForm">
                 <div class="container">
                   <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                      <div *ngFor="let control of templateForm.controls | keyvalue">
+                    <div class="col-lg-3 col-md-4 d-flex flex-column justify-content-center align-items-start">
+                      <p class="text-warning text-uppercase">Sender Details</p>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                      <mat-form-field>
+                        <input matInput formControlName="domain" type="text" placeholder="Domain Name">
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput formControlName="fromName" type="text" placeholder="From">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <mat-divider></mat-divider>
+              <!-- <div class="html-preview" [innerHTML]="templateHTML"></div> -->
+              <form [formGroup]="templateForm" *ngIf="selectedTestData">
+                <!-- Display list of inputs -->
+                <!-- <h4>Configurable params</h4> -->
+                <div class="container mt-1">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 d-flex flex-column justify-content-center align-items-start">
+                      <p class="text-warning text-uppercase">Template Details</p>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+
+                      <div *ngFor="let param of selectedTestData.params">
                         <mat-form-field>
-                          <!-- <label>{{ control.key }}</label> -->
-                          <input matInput formControlName="{{control.key}}" type="text" [placeholder]="control.key"
+
+                          <!-- <p>{{ param.description }}</p> -->
+                          <input matInput formControlName="{{param.value}}" type="text" [placeholder]="param.name"
                             (change)="refreshHTMLPreview()">
+
                         </mat-form-field>
                       </div>
-                      <div class="d-flex justify-content-between w-100">
-                        <button mat-button matStepperPrevious>Previous</button>
-                        <button mat-button matStepperNext>Next</button>
-                      </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between w-100">
+                      <button mat-button matStepperPrevious>Previous</button>
+                      <button mat-button matStepperNext>Next</button>
                     </div>
 
-                    <div class="col-md-12 col-lg-12 mb-0">
+                    <div class="col-md-12 col-lg-12 mb-0 mt-3">
+                      <p class="text-muted text-center m-0">Preview</p>
                       <mat-divider></mat-divider>
-                      <h3 class="text-center">Preview</h3>
-                      <h4>{{ selectedTemplate.versions[0].subject }}</h4>
-                      <p class="mb-0">{{ templateForm.controls.fromName.value }}
-                        &lt;{{ templateForm.controls.domain.value }}&gt;</p>
+                      <!-- <h3 class="text-center">Preview</h3> -->
+                      <div class="container mt-4">
+                        <div class="row">
+                          <div class="col-md-1 d-flex justify-content-center align-items-center">
+                            <i class="material-icons email-icon">account_circle</i>
+                          </div>
+                          <div class="col-md-11">
+                            <h4 class="font-weight-bold">{{ selectedTemplate.versions[0].subject }}</h4>
+                            <p class="mb-0">{{ senderForm.controls.fromName.value }}
+                              &lt;{{ senderForm.controls.domain.value }}&gt;</p>
+                          </div>
+                        </div>
+                      </div>
                       <iframe id="template-preview-frame" width="100%" height="800px" [srcdoc]="templateHTML"
                         frameborder="none" scrolling="no"></iframe>
                     </div>

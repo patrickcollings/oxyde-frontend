@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@app/_models';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ControlContainer } from '@angular/forms';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { EmployeeService } from '@app/_services/employee.service';
 import { CampaignService } from '@app/_services/campaign.service';
@@ -9,23 +9,10 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 import { EmailService } from '@app/_services/email.service';
-import { Template } from '@app/_models/template';
+import { Template, ITemplate } from '@app/_models/template';
+import { TestData } from '@app/_models/testData';
 import * as Handlebars from 'handlebars/dist/cjs/handlebars';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
-interface ITemplate {
-  id: string;
-  name: string;
-  versions: [
-    {
-      id: string;
-      name: string;
-      subject: string;
-      template_id: string;
-      test_data: Object;
-    }
-  ]
-}
 
 @Component({
   selector: 'app-create-campaign',
@@ -40,6 +27,7 @@ export class CreateCampaignComponent implements OnInit {
   selectedTemplate: Template;
   templateHTML: SafeHtml;
   compiledTemplate: any;
+  selectedTestData: TestData; 
 
   testEmail: string;
 
@@ -50,6 +38,7 @@ export class CreateCampaignComponent implements OnInit {
   lengthForm: FormGroup;
   quizForm: FormGroup;
   templateForm: FormGroup;
+  senderForm: FormGroup;
 
   sectorOptions = [
     'Accountancy, banking and finance',
@@ -143,6 +132,7 @@ export class CreateCampaignComponent implements OnInit {
 
     this.currentUser = this.authenticationService.currentUserValue;
     this.selectedTemplate = new Template();
+    // this.selectedTestData = new TestData();
     console.log(this.selectedTemplate);
 
     this.testEmail = this.currentUser.username;
@@ -164,9 +154,12 @@ export class CreateCampaignComponent implements OnInit {
 
     });
 
-    this.templateForm = this.formBuilder.group({
+    this.senderForm = this.formBuilder.group({
       domain: new FormControl('', Validators.required),
       fromName: new FormControl('', Validators.required)
+    });
+
+    this.templateForm = this.formBuilder.group({
     });
 
     // Create Quiz form
@@ -202,45 +195,48 @@ export class CreateCampaignComponent implements OnInit {
     this.detailForm.controls.templateId.setValue(id);
     // Get template
     this.emailService.getTemplate(id).pipe(first()).subscribe(res => {
-      // let tempString = JSON.parse(res['template'].versions[0].test_data);
-      this.selectedTemplate = res['template'];
-      this.selectedTemplate.versions[0].test_data = JSON.parse(res['template'].versions[0].test_data);
+      // Get response
+      this.selectedTemplate = res.template;
+      this.selectedTestData = JSON.parse(this.selectedTemplate.versions[0].test_data);
       // Remove old form controls
-      Object.keys(this.templateForm.controls).forEach(control => {
-        if (control !== 'domain' && control !== 'fromName') {
-          this.templateForm.removeControl(control);
-        }
-      })
+      Object.keys(this.templateForm.controls).forEach(control => this.templateForm.removeControl(control));
       // Update template form controls
-      Object.keys(this.selectedTemplate.versions[0].test_data).forEach(key => {
-        this.templateForm.addControl(key, new FormControl('', Validators.required));
+      this.selectedTestData.params.forEach(param => {
+        let control = (param.required) ? new FormControl('', Validators.required) : new FormControl({value: param.name, disabled: true});
+        this.templateForm.addControl(param.value, control);
       });
       // Compile email template
       this.compiledTemplate = Handlebars.compile(this.selectedTemplate.versions[0].html_content);
-      this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(this.selectedTemplate.versions[0].test_data));
+      // Use original test data to populate email at first
+      this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(JSON.parse(this.selectedTemplate.versions[0].test_data)));
     })
   }
 
   refreshHTMLPreview() {
     // Create new context
-    let context = {};
-    Object.keys(this.templateForm.value).forEach(value => {
-      context[value] = this.templateForm.value[value];
-    });
+    let context = this.getDynamicData();
     // Compile handlebar into safe html with new context
     this.templateHTML = this.sanitizer.bypassSecurityTrustHtml(this.compiledTemplate(context));
   }
 
+  getDynamicData() {
+    let context = {};
+    Object.keys(this.templateForm.getRawValue()).forEach(value => {
+      context[value] = this.templateForm.getRawValue()[value];
+    });
+    return context;
+  }
+
   sendTest() {
     // Get quiz details to fill test
-    let quiz = this.quizForm.value;
-    console.log(quiz);
+    let senderData = this.senderForm.value;
+
     const params = {
       email: this.testEmail,
-      domain: quiz.companyDomain,
+      domain: senderData.domain,
       templateId: this.selectedTemplate.id,
-      managerName: quiz.managerName,
-      dynamic_template_data: this.selectedTemplate.versions[0].test_data
+      managerName: senderData.fromName,
+      dynamic_template_data: this.getDynamicData()
     }
 
     console.log(params);

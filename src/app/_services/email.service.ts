@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
+import { ITemplate } from '@app/_models/template';
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +40,7 @@ export class EmailService {
     return this.http.get(`${environment.apiUrl}/email/templates`);
   }
 
-  getTemplate(id: string) {
-    return this.http.get(`${environment.apiUrl}/email/template/${id}`);
+  getTemplate(id: string): Observable<ITemplate> {
+    return this.http.get<ITemplate>(`${environment.apiUrl}/email/template/${id}`);
   }
 }

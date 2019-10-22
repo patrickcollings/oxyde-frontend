@@ -8,7 +8,7 @@ export class Template {
             subject: string;
             template_id: string;
             html_content: string;
-            test_data: object;
+            test_data: string;
             plain_content: string;
         }
     ] = [
@@ -18,8 +18,26 @@ export class Template {
             subject: '',
             template_id: '',
             html_content: '',
-            test_data: {},
+            test_data: '',
             plain_content: ''
         }
     ]
 }
+
+export interface ITemplate {
+    template: {
+      id: string;
+      name: string;
+      versions: [
+        {
+          id: string;
+          name: string;
+          subject: string;
+          template_id: string;
+          html_content: string;
+          test_data: string;
+          plain_content: string;
+        }
+      ]
+    }
+  }
