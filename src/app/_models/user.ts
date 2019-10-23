@@ -9,4 +9,5 @@ export class User {
     token: string;
     employees: Employee[];
     whitelistingSetup: boolean;
+    emailTest: boolean;
 }
