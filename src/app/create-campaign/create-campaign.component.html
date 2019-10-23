@@ -21,7 +21,7 @@
             </mat-step>
             <mat-step [stepControl]="quizForm" label="Campaign Quiz">
               <form [formGroup]="quizForm">
-                <mat-form-field class="form-field">
+                <!-- <mat-form-field class="form-field">
                   <input matInput placeholder="Company Name" type="text" formControlName="companyName" class="" />
                 </mat-form-field>
                 <mat-form-field class="form-field">
@@ -29,17 +29,17 @@
                 </mat-form-field>
                 <mat-form-field class="form-field">
                   <input matInput placeholder="Manager Name" type="text" formControlName="managerName" class="" />
-                </mat-form-field>
+                </mat-form-field> -->
                 <mat-form-field class="form-field">
                   <mat-select placeholder="Business Sector" formControlName="sector">
                     <mat-option *ngFor="let option of sectorOptions" [value]="option">{{ option }}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field class="form-field">
+                <!-- <mat-form-field class="form-field">
                   <mat-select placeholder="Email Provider" formControlName="emailProvider">
                     <mat-option *ngFor="let option of emailProviderOptions" [value]="option">{{ option }}</mat-option>
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
                 <mat-divider></mat-divider>
                 <p>Difficulty</p>
                 <ng5-slider class="range-slider" [options]="sliderDifficultyOptions" formControlName="difficulty">
@@ -87,7 +87,8 @@
             <mat-step label="Select Template">
 
               <!-- Select the template required here: -->
-              <h2>Select your template</h2>
+              <!-- <h2>Select your template</h2> -->
+              <p>Based on your business we recommend these templates, please select one:</p>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-info">
@@ -210,8 +211,7 @@
                 </div>
                 <div>
                   <button mat-button matStepperPrevious>Previous Section</button>
-                  <button mat-button matStepperNext>Next Section</button>
-                  <!-- <button mat-button matStepperNext [disabled]="!detailForm.valid">Next Section</button> -->
+                  <button mat-button (click)="submit()">Create Campaign</button>
                 </div>
               </form>
             </mat-step>

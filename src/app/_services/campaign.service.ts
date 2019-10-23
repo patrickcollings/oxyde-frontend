@@ -14,8 +14,8 @@ export class CampaignService {
         private http: HttpClient,
     ) { }
 
-    public create(name: string, length: number, employees: Employee[], domain: string, emailProvider: string, companyName: string) {
-        return this.http.post<Campaign>(`${environment.apiUrl}/campaign`, {name, length, employees, domain, emailProvider, companyName});
+    public create(name: string, length: number, employees: Employee[], startTime: Date, startAsap: boolean, domain: string, fromName: string, templateId: string, dynamic_template_data: object) {
+        return this.http.post<Campaign>(`${environment.apiUrl}/campaign`, {name, length, employees, domain, startTime, startAsap, fromName, templateId, dynamic_template_data});
     } 
 
     /**

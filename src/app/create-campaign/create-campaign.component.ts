@@ -251,38 +251,26 @@ export class CreateCampaignComponent implements OnInit {
     const employeeValue = this.employeeForm.value;
     const detailValue = this.detailForm.value;
     const quizValue = this.quizForm.value;
-    const templateValue = this.templateForm.value;
+    const templateValue = this.getDynamicData();
+    const senderValue = this.senderForm.value;
 
-    console.log(employeeValue);
-    console.log(detailValue);
-    console.log(quizValue);
     console.log(templateValue);
 
-    const testData = {
-      name: "Patrick",
-      link: "OpeningLink",
-      corporation: "Oxyde",
-      managerName: "Marcus",
-      campaignLength: 2,
-      emailProvider: "Outlook",
-    }
-
-    console.log('Creating campaign');
-
-    // this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, quizValue.companyDomain, quizValue.emailProvider, quizValue.companyName)
-    //   .pipe(first())
-    //   .subscribe(
-    //     res => {
-    //       console.log(res);
-    //       if (Object.keys(res).length === 0) {
-    //         this.router.navigateByUrl('/campaigns');
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       this.alertService.error(error);
-    //     }
-    //   )
+    this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, new Date(), false, 
+      senderValue.domain, senderValue.fromName, this.selectedTemplate.id, templateValue)
+      .pipe(first())
+      .subscribe(
+        res => {
+          console.log(res);
+          if (Object.keys(res).length === 0) {
+            this.router.navigateByUrl('/campaigns');
+          }
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+        }
+      )
   }
 
 }
