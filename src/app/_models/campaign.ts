@@ -5,7 +5,8 @@ export class Campaign {
     length: Number;
     employees: [{
         id: Number,
-        caught: Number
+        caught: Boolean,
+        linkOpened: Number
     }];
     phished: Number;
     avoided: Number;

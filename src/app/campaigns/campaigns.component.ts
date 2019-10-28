@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class CampaignsComponent implements OnInit {
 
   campaign: Campaign;
-  employees: [{id: Number, caught: Number}];
+  employees: [{id: Number, caught: Boolean}];
 
   constructor(
     private authenticationService: AuthenticationService,

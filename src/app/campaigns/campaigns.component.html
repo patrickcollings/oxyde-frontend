@@ -122,13 +122,18 @@
                 <thead class=" text-info">
                   <th>Name</th>
                   <th>Caught</th>
-                  <th>Evaded</th>
+                  <th>Opened Link</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let employee of employees">
                     <td>{{ employee.id.firstName }} {{ employee.id.lastName }}</td>
-                    <td>{{ employee.caught }}</td>
-                    <td>0</td>
+                    <td *ngIf="employee.caught">
+                      Yes
+                    </td>
+                    <td *ngIf="!employee.caught">
+                      No
+                    </td>
+                    <td>{{ employee.linkOpened }}</td>
                   </tr>
                 </tbody>
               </table>
