@@ -13,11 +13,34 @@ import { Template, ITemplate } from '@app/_models/template';
 import { TestData } from '@app/_models/testData';
 import * as Handlebars from 'handlebars/dist/cjs/handlebars';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import * as moment from 'moment';
+
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'ddd LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+  strict: true
+};
 
 @Component({
   selector: 'app-create-campaign',
   templateUrl: './create-campaign.component.html',
-  styleUrls: ['./create-campaign.component.scss']
+  styleUrls: ['./create-campaign.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class CreateCampaignComponent implements OnInit {
   currentUser: User;
@@ -27,11 +50,14 @@ export class CreateCampaignComponent implements OnInit {
   selectedTemplate: Template;
   templateHTML: SafeHtml;
   compiledTemplate: any;
-  selectedTestData: TestData; 
+  selectedTestData: TestData;
 
   testEmail: string;
 
   objectkeys = Object.keys;
+
+  today: any;
+  startNow: boolean = false;
 
   employeeForm: FormGroup;
   detailForm: FormGroup;
@@ -114,6 +140,13 @@ export class CreateCampaignComponent implements OnInit {
     ],
   }
 
+  sliderLengthOptions: Options = {
+    floor: 1,
+    ceil: 6,
+    step: 1,
+    showTicks: true
+  }
+
   employeeSelection = [];
 
   // convenience getter for easy access to form fields
@@ -132,9 +165,7 @@ export class CreateCampaignComponent implements OnInit {
 
     this.currentUser = this.authenticationService.currentUserValue;
     this.selectedTemplate = new Template();
-    // this.selectedTestData = new TestData();
-    console.log(this.selectedTemplate);
-
+    this.today = moment();
     this.testEmail = this.currentUser.username;
 
     // Create Employee Form
@@ -146,7 +177,10 @@ export class CreateCampaignComponent implements OnInit {
     this.detailForm = this.formBuilder.group({
       campaignName: new FormControl('', Validators.required),
       length: new FormControl(1, Validators.required),
-      templateId: new FormControl('', Validators.required)
+      templateId: new FormControl('', Validators.required),
+      startNow: new FormControl(false),
+      startDate: new FormControl(moment(), Validators.required),
+      startTime: new FormControl('09:00', Validators.required),
     });
 
     // Create length form
@@ -202,7 +236,7 @@ export class CreateCampaignComponent implements OnInit {
       Object.keys(this.templateForm.controls).forEach(control => this.templateForm.removeControl(control));
       // Update template form controls
       this.selectedTestData.params.forEach(param => {
-        let control = (param.required) ? new FormControl('', Validators.required) : new FormControl({value: param.name, disabled: true});
+        let control = (param.required) ? new FormControl('', Validators.required) : new FormControl({ value: param.name, disabled: true });
         this.templateForm.addControl(param.value, control);
       });
       // Compile email template
@@ -255,9 +289,23 @@ export class CreateCampaignComponent implements OnInit {
     const senderValue = this.senderForm.value;
 
     console.log(templateValue);
+    console.log(detailValue);
 
-    this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, new Date(), false, 
-      senderValue.domain, senderValue.fromName, this.selectedTemplate.id, templateValue)
+    let startTime: moment.Moment;
+
+    // Get startTime
+    if (detailValue.startNow) {
+      startTime = moment();
+    } else {
+      startTime = moment(detailValue.startDate.format('DD/MM/YYYY') + ' ' + detailValue.startTime, 'DD/MM/YYYY HH:mm');
+    }
+
+    // Calculate end date - for testing use minutes
+    let endTime = moment(startTime).add(detailValue.length, 'minutes');
+    // let endTime = moment(startTime).add(detailValue.length, 'weeks');
+
+    this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, startTime,
+      senderValue.domain, senderValue.fromName, this.selectedTemplate.id, templateValue, endTime)
       .pipe(first())
       .subscribe(
         res => {

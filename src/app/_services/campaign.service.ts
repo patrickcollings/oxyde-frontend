@@ -7,6 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
+import * as moment from 'moment';
+
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
 
@@ -14,8 +16,8 @@ export class CampaignService {
         private http: HttpClient,
     ) { }
 
-    public create(name: string, length: number, employees: Employee[], startTime: Date, startAsap: boolean, domain: string, fromName: string, templateId: string, dynamic_template_data: object) {
-        return this.http.post<Campaign>(`${environment.apiUrl}/campaign`, {name, length, employees, domain, startTime, startAsap, fromName, templateId, dynamic_template_data});
+    public create(name: string, length: number, employees: Employee[], startTime: moment.Moment, domain: string, fromName: string, templateId: string, dynamic_template_data: object, endTime: moment.Moment) {
+        return this.http.post<Campaign>(`${environment.apiUrl}/campaign`, {name, length, employees, domain, startTime, fromName, templateId, dynamic_template_data, endTime});
     } 
 
     /**

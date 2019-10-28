@@ -26,8 +26,11 @@ import {
   MatSelectModule,
   MatListModule,
   MatSliderModule,
-  MatStepperModule
+  MatStepperModule,
+  MatDatepickerModule,
+  MatSlideToggleModule
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ReportsComponent } from '../../reports/reports.component';
 import { TrainingComponent } from '../../training/training.component';
@@ -50,7 +53,10 @@ import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-tes
     MatSliderModule,
     MatStepperModule,
     Ng5SliderModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatSlideToggleModule
   ],
   declarations: [
     CampaignsComponent,
@@ -68,6 +74,8 @@ import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-tes
     SetupComponent,
     WhitelistFormComponent,
     WhitelistTestComponent
+  ],
+  providers: [
   ]
 })
 

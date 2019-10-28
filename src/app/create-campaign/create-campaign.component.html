@@ -186,30 +186,53 @@
             <mat-step [stepControl]="detailForm" label="Final Step">
               <!-- Select length -->
               <form [formGroup]="detailForm">
-                <mat-form-field>
-                  <input matInput placeholder="Campaign Name" type="text" formControlName="campaignName" class="" />
-                </mat-form-field>
-                <!-- Campaign Length -->
-                <p>Campaign Length (weeks)</p>
-                <mat-slider formControlName="length" class="w-100" [max]="6" [min]="1" [step]="1" thumbLabel
-                  [tickInterval]="1">
-                </mat-slider>
-                <!-- Test campaign -->
-                <h4>Preview your campaign email by sending it to yourself:</h4>
-                <div class="container">
-                  <div class="row d-flex justify-content-between w-100">
-                    <div class="col-md-8">
-                      <mat-form-field class="w-100">
-                        <input matInput placeholder="Email Address" [(ngModel)]="testEmail" name="email"
-                          [ngModelOptions]="{standalone: true}">
-                      </mat-form-field>
+                <div class="container mt-1">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 d-flex flex-column justify-content-center align-items-start">
+                      <p class="text-warning text-uppercase">Details</p>
                     </div>
-                    <div class="col-md-4">
-                      <button mat-raised-button (click)="sendTest()">Send Test Email</button>
+                    <div class="col-md-8 col-lg-9">
+                      <mat-form-field>
+                        <input matInput placeholder="Campaign Name" type="text" formControlName="campaignName"
+                          class="" />
+                      </mat-form-field>
+                      <mat-slide-toggle class="mb-1" formControlName="startNow">Start Now</mat-slide-toggle>
+                      <mat-form-field *ngIf="!detailForm.value.startNow">
+                        <input matInput [matDatepicker]="picker" formControlName="startDate" [min]="today" placeholder="Start date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field *ngIf="!detailForm.value.startNow">
+                        <input matInput type="time" formControlName="startTime" placeholder="Start time">
+                      </mat-form-field>
+                      <p class="text-center mb-0">Campaign Length (weeks)</p>
+                      <ng5-slider class="range-slider" [options]="sliderLengthOptions" formControlName="length">
+                      </ng5-slider>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="row mt-5">
+                    <div class="col-lg-3 col-md-4 d-flex flex-column justify-content-center align-items-start">
+                      <p class="text-warning text-uppercase">Test</p>
+                    </div>
+                    <div class="col-md-8 col-lg-9 container">
+                      <p class="text-center">Preview your campaign email by sending it to yourself:</p>
+                      <div class="row d-flex justify-content-between w-100">
+                        <div class="col-md-8">
+                          <!-- Test campaign -->
+                          <mat-form-field class="w-100">
+                            <input matInput placeholder="Email Address" [(ngModel)]="testEmail" name="email"
+                              [ngModelOptions]="{standalone: true}" disabled>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <button mat-raised-button (click)="sendTest()">Send Test Email</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
+                <div class="w-100 d-flex justify-content-between mt-3">
                   <button mat-button matStepperPrevious>Previous Section</button>
                   <button mat-button (click)="submit()">Create Campaign</button>
                 </div>
