@@ -12,6 +12,8 @@ export class UserProfileComponent implements OnInit {
 
   user: User;
 
+  show = '';
+
   constructor(
     private authService: AuthenticationService
   ) { }
