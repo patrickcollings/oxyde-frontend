@@ -166,7 +166,7 @@ export class CreateCampaignComponent implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue;
     this.selectedTemplate = new Template();
     this.today = moment();
-    this.testEmail = this.currentUser.username;
+    this.testEmail = this.currentUser.email;
 
     // Create Employee Form
     this.employeeForm = this.formBuilder.group({

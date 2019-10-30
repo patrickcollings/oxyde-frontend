@@ -16,6 +16,11 @@ export class SignupComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  showError = false;
+  errorMsg = '';
+  showSuccess = false;
+  successMsg = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -33,7 +38,7 @@ export class SignupComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -45,10 +50,12 @@ export class SignupComponent implements OnInit {
     this.submitted = true;
 
     // reset alerts on submit
-    this.alertService.clear();
+    this.showError = false;
+    this.showSuccess = false;
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      console.log(this.registerForm.controls.firstName.errors);
       return;
     }
 
@@ -57,11 +64,17 @@ export class SignupComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login']);
+          this.loading = false;
+          this.showSuccess = true;
+          this.successMsg = data['message'];
+          // this.router.navigate(['/login']);
         },
         error => {
-          this.alertService.error(error);
+          // this.alertService.error(error);
+          console.log(error);
+          this.showError = true;
+          this.errorMsg = error;
+          this.submitted = false;
           this.loading = false;
         });
   }

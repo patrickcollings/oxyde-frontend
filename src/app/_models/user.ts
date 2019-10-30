@@ -2,7 +2,7 @@
 
 export class User {
     _id: number;
-    username: string;
+    email: string;
     password: string;
     firstName: string;
     lastName: string;
@@ -10,4 +10,5 @@ export class User {
     employees: Employee[];
     whitelistingSetup: boolean;
     emailTest: boolean;
+    verified: boolean;
 }

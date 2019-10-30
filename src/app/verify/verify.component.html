@@ -1,3 +1,8 @@
-<p>
-  verify works!
-</p>
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-center h-100">
+    <div class="d-flex flex-column align-items-center">
+      <p>{{ showMessage }}</p>
+      <a [routerLink]="['/login']" class="btn btn-secondary btn-round">Login</a>
+    </div>
+  </div>
+</div>

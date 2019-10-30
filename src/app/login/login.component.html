@@ -4,11 +4,11 @@
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
             <div class="form-group">
                 <mat-form-field class="example-full-width">
-                    <input matInput type="text" placeholder="Username" formControlName="username" class=""
-                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <input matInput type="text" placeholder="Email" formControlName="email" class=""
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                 </mat-form-field>
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
                 </div>
             </div>
             <div class="form-group">

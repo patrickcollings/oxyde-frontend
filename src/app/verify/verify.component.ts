@@ -10,6 +10,8 @@ import { first, switchMap } from 'rxjs/operators';
 })
 export class VerifyComponent implements OnInit {
 
+  showMessage: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService
@@ -21,7 +23,16 @@ export class VerifyComponent implements OnInit {
           this.userService.verify(params.get('token'))) // Verify token
       )
       .subscribe(
-        res => { console.log(res) })
+        res => { 
+          if (res['success']) {
+            this.showMessage = res['message'];
+          } else {
+            this.showMessage = res['message'];
+          }
+         },
+        err => {
+          console.log(err);
+        })
   }
 
   ngOnInit() {

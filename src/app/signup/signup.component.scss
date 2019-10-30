@@ -11,6 +11,23 @@
     width: 100%;
     max-width: 600px;
     padding: 50px;
+    padding-top: 10px;
     margin: 0 auto;
     // flex-grow: 1;
+  }
+
+  .invalid-feedback {
+    display: block;
+    // border: solid 1px red;
+    // padding: 0.1em;
+    // border-radius: 0.4em;
+  }
+
+  #return-to-login {
+    margin-left: -40px;
+  }
+
+  #return-to-login:hover {
+    cursor: pointer;
+    color: grey;
   }
