@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     private campaignService: CampaignService,
     private employeeService: EmployeeService
   ) { 
-
+    this.user = this.authService.currentUserValue;
   }
 
 
