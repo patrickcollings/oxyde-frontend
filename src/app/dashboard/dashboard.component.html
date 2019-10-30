@@ -1,6 +1,27 @@
 <div class="main-content">
     <div class="container-fluid">
 
+        <div class="row" [hidden]="user.accountDetailsCompleted">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-title">Welcome to your dashboard</div>
+                    </div>
+                    <div class="card-body">
+                        <p>This looks like the first time you've logged in. In order to begin using the platform you
+                            must
+                            complete your
+                            profile.
+                        </p>
+                        <div class="d-flex justify-content-center">
+                            <button mat-raised-button [routerLink]="['/user-profile']">Complete Profile</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="row" [hidden]="!campaign">
             <div class="col-md-4">
                 <div class="card card-chart">
@@ -10,7 +31,8 @@
                     <div class="card-body">
                         <h4 class="card-title">Emails evaded</h4>
                         <p class="card-category">
-                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase on last week.</p>
+                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase on last
+                            week.</p>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -53,7 +75,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" [hidden]="!user.accountDetailsCompleted">
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">

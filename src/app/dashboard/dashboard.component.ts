@@ -21,7 +21,11 @@ export class DashboardComponent implements OnInit {
     private authService: AuthenticationService,
     private campaignService: CampaignService,
     private employeeService: EmployeeService
-  ) { }
+  ) { 
+
+  }
+
+
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
     seq = 0;
@@ -78,6 +82,7 @@ export class DashboardComponent implements OnInit {
 
     seq2 = 0;
   };
+
   ngOnInit() {
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -149,6 +154,10 @@ export class DashboardComponent implements OnInit {
         }
       }]
     ];
+
+    this.authService.getCurrent().pipe(first()).subscribe(user => {
+      this.user = user;
+    })
 
     this.campaignService.getCampaign().pipe(first()).subscribe(res => {
       this.campaign = res;

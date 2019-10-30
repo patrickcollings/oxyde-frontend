@@ -13,15 +13,23 @@ export class UserService {
         return this.http.post(`${environment.apiUrl}/manager/register`, user);
     }
 
-    updateWhitelistingSetup(whitelistingSetup: boolean) {
-        return this.http.put(`${environment.apiUrl}/manager/current`, { whitelistingSetup });
+    whitelistingComplete(whitelisted: boolean) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { whitelisted });
     }
 
-    updateEmailTesting(emailTest: boolean) {
-        return this.http.put(`${environment.apiUrl}/manager/current`, { emailTest });
+    emailTested(emailTested: boolean) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { emailTested });
+    }
+
+    quizCompleted(quizCompleted: boolean) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { quizCompleted });
     }
 
     verify(token: string) {
         return this.http.post(`${environment.apiUrl}/manager/verify`, { token });
+    }
+
+    updateQuiz(quiz: object) {
+        return this.http.put(`${environment.apiUrl}/manager/current`, { quiz });
     }
 }

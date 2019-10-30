@@ -3,9 +3,57 @@
 }
 
 .checklist-item:hover {
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .selected {
     font-weight: bold;
+}
+
+.officeHourSlider {
+    margin: 2em 0 3.5em 0;
+}
+
+.form-field {
+    margin: 1em 0;
+}
+
+.quiz-questions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em 0;
+}
+
+.range-slider {
+    margin: 2em 0 3.5em 0;
+}
+
+::ng-deep 
+    .ng5-slider
+        .ng5-slider-tick-legend {
+            max-width: 70px !important;
+        }
+
+
+.template-list-item:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+::ng-deep .mat-button-toggle-label-content {
+    width: 100%;
+}
+
+.selected-template {
+    background-color: #fafafa;
+    font-weight: bold;
+}
+
+#template-preview-frame {
+    pointer-events: none;
+}
+
+.email-icon {
+    font-size: 3em;
 }

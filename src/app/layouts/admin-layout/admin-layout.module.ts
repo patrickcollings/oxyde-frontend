@@ -38,6 +38,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { WhitelistFormComponent } from '../../setup/whitelist-form/whitelist-form.component';
 import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-test.component';
 import { AccountDetailsComponent } from '../../user-profile/account-details/account-details.component';
+import { WhitelistWizardComponent } from '../../user-profile/whitelist-wizard/whitelist-wizard.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -75,7 +76,8 @@ import { AccountDetailsComponent } from '../../user-profile/account-details/acco
     SetupComponent,
     WhitelistFormComponent,
     WhitelistTestComponent,
-    AccountDetailsComponent
+    AccountDetailsComponent,
+    WhitelistWizardComponent
   ],
   providers: [
   ]

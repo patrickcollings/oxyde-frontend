@@ -6,8 +6,16 @@
           <div class="card-header">
             <h4 class="card-category">Welcome to your account</h4>
           </div>
-          <div class="card-body">
-            <p><span class="font-weight-bold">Please read this notice: </span>Here you will find all the information relating to your account. In order to start running campaigns you
+          <div class="card-body" *ngIf="user.accountDetailsCompleted">
+            <p>Account setup completed! You can now use the platform.</p>
+            <p>The next step is to add your employees.</p>
+            <div class="d-flex justify-content-center">
+              <button mat-raised-button [routerLink]="['/employees']">Add Employees</button>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="!user.accountDetailsCompleted">
+            <p><span class="font-weight-bold">Please read this notice: </span>Here you will find all the information
+              relating to your account. In order to start running campaigns you
               must complete all
               the sections below, enabling us to run better campaigns in the future.
             </p>
@@ -24,22 +32,30 @@
         <div class="card card-profile">
           <div class="card-body">
             <!-- <h6 class="card-category text-gray">Patrick Collings</h6> -->
-            <h4 class="card-title font-weight-bold">Progress</h4>
+            <h4 class="card-title font-weight-bold">Progress {{progress}}%</h4>
             <ol class="pl-0">
-              <li [class.complete]="" [class.selected]="show === Display.Details" (click)="show = Display.Details"
+              <li [class.complete]="user.quizCompleted"
                 class="checklist-item d-flex align-items-center justify-content-between">
-                Account Details <i class="material-icons">check_box_outline_blank</i></li>
-              <li [class.complete]="user.verified" [class.selected]="show === Display.Verify"
-                (click)="show = Display.Verify"
-                class="checklist-item d-flex align-items-center justify-content-between">Verify your email <i
-                  class="material-icons" *ngIf="!user.verified">check_box_outline_blank</i><i class="material-icons"
-                  *ngIf="user.verified">check_box</i></li>
-              <li [class.complete]="" [class.selected]="show === Display.Whitelist" (click)="show = Display.Whitelist"
-                class="checklist-item d-flex align-items-center justify-content-between">Whitelist
-                Wizard <i class="material-icons">check_box_outline_blank</i></li>
-              <li [class.complete]="" [class.selected]="show === Display.Test" (click)="show = Display.Test"
-                class="checklist-item d-flex align-items-center justify-content-between">Test your
-                email <i class="material-icons">check_box_outline_blank</i></li>
+                Account Details
+                <i class="material-icons" *ngIf="!user.quizCompleted">check_box_outline_blank</i>
+                <i class="material-icons" *ngIf="user.quizCompleted">check_box</i>
+              </li>
+              <li [class.complete]="user.verified"
+                class="checklist-item d-flex align-items-center justify-content-between">
+                Verify your email
+                <i class="material-icons" *ngIf="!user.verified">check_box_outline_blank</i>
+                <i class="material-icons" *ngIf="user.verified">check_box</i>
+              </li>
+              <li [class.complete]="user.whitelisted"
+                class="checklist-item d-flex align-items-center justify-content-between">
+                Whitelist Wizard
+                <i class="material-icons" *ngIf="!user.whitelisted">check_box_outline_blank</i>
+                <i class="material-icons" *ngIf="user.whitelisted">check_box</i>
+              <li [class.complete]="user.emailTested"
+                class="checklist-item d-flex align-items-center justify-content-between">
+                Test your email
+                <i class="material-icons" *ngIf="!user.emailTested">check_box_outline_blank</i>
+                <i class="material-icons" *ngIf="user.emailTested">check_box</i>
             </ol>
             <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round" disabled>Incomplete</a> -->
           </div>
@@ -47,31 +63,123 @@
       </div>
       <div class="col-md-9">
         <div class="card">
-          <div class="card-header card-header-danger">
+          <div class="card-header" [class.card-header-danger]="!user.quizCompleted"
+            [class.card-header-success]="user.quizCompleted">
             <h4 class="card-title">Company Details</h4>
           </div>
           <div class="card-body">
+            <form [formGroup]="quizForm" (ngSubmit)="submitQuiz()">
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Company Name" type="text" formControlName="companyName" class="" />
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Company Domain" type="text" formControlName="companyDomain" class="" />
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Manager Name" type="text" formControlName="managerName" class="" />
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <mat-select placeholder="Business Sector" formControlName="businessSector">
+                  <mat-option *ngFor="let option of sectorOptions" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <mat-select placeholder="Email Provider" formControlName="emailProvider">
+                  <mat-option *ngFor="let option of emailProviderOptions" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-divider></mat-divider>
+              <p>Difficulty</p>
+              <ng5-slider class="range-slider" [options]="sliderDifficultyOptions" formControlName="difficulty">
+              </ng5-slider>
+              <p>Office Hours</p>
+              <ng5-slider class="range-slider" [options]="sliderOptions" formControlName="officeHours">
+              </ng5-slider>
+              <mat-divider></mat-divider>
+              <div class="quiz-questions">
+                <p>Has an employee fallen for a phishing scam before?</p>
+                <mat-button-toggle-group formControlName="employeeScammedBefore" aria-label="Font Style">
+                  <mat-button-toggle [value]="false">No</mat-button-toggle>
+                  <mat-button-toggle [value]="true">Yes</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <div class="quiz-questions">
+                <p>Do your employees have good technical skills?</p>
+                <mat-button-toggle-group formControlName="employeeGoodTechnicalSkills" aria-label="Font Style">
+                  <mat-button-toggle [value]="false">No</mat-button-toggle>
+                  <mat-button-toggle [value]="true">Yes</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <div class="quiz-questions">
+                <p>Are you a small/medium sized business?</p>
+                <mat-button-toggle-group formControlName="smallBusiness" aria-label="Font Style">
+                  <mat-button-toggle [value]="false">No</mat-button-toggle>
+                  <mat-button-toggle [value]="true">Yes</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <div class="quiz-questions">
+                <p>Do you have a tech department?</p>
+                <mat-button-toggle-group formControlName="techDepartment" aria-label="Font Style">
+                  <mat-button-toggle [value]="false">No</mat-button-toggle>
+                  <mat-button-toggle [value]="true">Yes</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <button mat-raised-button [disabled]="!quizForm.valid">Update</button>
+            </form>
           </div>
         </div>
         <div class="card">
-          <div class="card-header card-header-danger">
+          <div class="card-header" [class.card-header-danger]="!user.verified"
+            [class.card-header-success]="user.verified">
             <h4 class="card-title">Verify Your Email</h4>
+            <h4 class="card-category" *ngIf="user.verified">Complete</h4>
           </div>
           <div class="card-body">
+            <p>To use our platform we ask that you verify that you have access to your email provider under your domain.
+              When you registered we
+              sent you an email. Open this and click on the link to verify your account.
+            </p>
+            <p>Not seeing the email? Send it again.</p>
           </div>
         </div>
         <div class="card">
-          <div class="card-header card-header-danger">
+          <div class="card-header" [class.card-header-danger]="!user.whitelisted"
+            [class.card-header-success]="user.whitelisted">
             <h4 class="card-title">Whitelist our servers</h4>
           </div>
           <div class="card-body">
+            <p>To whitelist our servers use our whitelisting wizard to help guide you the through the process. This will depend on which email provider and
+              software you use.</p>
+              <p><b>Warning:</b> If you do not whitelist our servers properly then there is a possibility our emails go to your employees spam folder.</p>
+            <div class="d-flex justify-content-center">
+              <button mat-raised-button [routerLink]="['/user-profile/whitelist']">Begin</button>
+              <button mat-raised-button class="ml-3">Complete</button>
+            </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header card-header-danger">
+          <div class="card-header" [class.card-header-danger]="!user.emailTested"
+            [class.card-header-success]="user.emailTested">
             <h4 class="card-title">Run a test campaign</h4>
           </div>
           <div class="card-body">
+            <p>Send a fake campaign to yourself. This campaign won't track anything but allows you to check that the
+              email doesn't go to spam.</p>
+            <p>Try sending multiple emails to both yourself and someone else on your team who knows about the training
+              that is taking place.</p>
+            <p>If you are having problems with whitelisting your server please first try phoning your provider and
+              asking them for help.</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Email Address" [(ngModel)]="email" name="email">
+              </mat-form-field>
+              <button mat-raised-button class="ml-3" (click)="sendTest()">Send</button>
+            </div>
+            <p>Once you have received the email mark this section as complete by clicking complete.</p>
+            <div class="d-flex justify-content-center">
+              <button mat-raised-button class="w-40" (click)="complete()">Completed</button>
+            </div>
           </div>
         </div>
       </div>

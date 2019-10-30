@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { SlideInOutAnimation } from '@app/_helpers/animations';
 import { UserService } from '@app/_services/user.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { SlideInOutAnimation } from '@app/_helpers/animations';
 
 @Component({
-  selector: 'app-whitelist-form',
-  templateUrl: './whitelist-form.component.html',
-  styleUrls: ['./whitelist-form.component.scss'],
+  selector: 'app-whitelist-wizard',
+  templateUrl: './whitelist-wizard.component.html',
+  styleUrls: ['./whitelist-wizard.component.scss'],
   animations: [SlideInOutAnimation]
 })
-export class WhitelistFormComponent implements OnInit {
+export class WhitelistWizardComponent implements OnInit {
 
   formStates = [
     'in',
@@ -48,9 +48,8 @@ export class WhitelistFormComponent implements OnInit {
 
   complete() {
     // Update whitelisting complete
-    // this.userService.updateWhitelistingSetup(true).pipe(first()).subscribe(res => {
-    //   this.router.navigate(['/setup']);
-    // });
+    this.userService.whitelistingComplete(true).pipe(first()).subscribe(res => {
+      this.router.navigate(['/user-profile']);
+    });
   }
-
 }

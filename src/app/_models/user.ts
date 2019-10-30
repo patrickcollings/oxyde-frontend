@@ -8,9 +8,10 @@ export class User {
     lastName: string;
     token: string;
     employees: Employee[];
-    whitelistingSetup: boolean;
-    emailTest: boolean;
+    whitelisted: boolean;
+    emailTested: boolean;
     verified: boolean;
+    quizCompleted: boolean;
     quiz: {
         companyName: String;
         companyDomain: String;

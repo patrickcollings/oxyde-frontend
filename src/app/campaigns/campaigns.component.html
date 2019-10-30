@@ -6,11 +6,13 @@
         <div class="card">
           <div class="card-header card-header-info campaign-header">
             <h4 class="card-title campaign-title">Current Campaign</h4>
-            <button mat-button *ngIf="!campaign" (click)="createCampaign()">Create Campaign</button>
+            <button mat-button *ngIf="!campaign && user.accountDetailsCompleted" (click)="createCampaign()">Create Campaign</button>
             <button mat-button *ngIf="campaign" (click)="removeCampaign()">Remove Campaign</button>
           </div>
           <div class="card-body">
-            <h5 *ngIf="!campaign">No campaigns currently in progress. To start one click <a [routerLink]="['/campaigns/create']">here.</a></h5>
+            <h5 *ngIf="!user.accountDetailsCompleted">Your account is not setup yet, please complete your profile before creating a campaign.</h5>
+            <button mat-raised-button *ngIf="!user.accountDetailsCompleted" [routerLink]="['/user-profile']">Complete Profile</button>
+            <h5 *ngIf="!campaign && user.accountDetailsCompleted">No campaigns currently in progress. To start one click <a [routerLink]="['/campaigns/create']">here.</a></h5>
             <mat-list *ngIf="campaign">
               <h3 mat-subheader>Details</h3>
               <mat-list-item>

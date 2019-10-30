@@ -7,6 +7,7 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import { EmployeeService } from '@app/_services/employee.service';
 import { AlertService } from '@app/_services/alert.service';
 import { Router } from '@angular/router';
+import { UserService } from '@app/_services/user.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -17,18 +18,24 @@ export class CampaignsComponent implements OnInit {
 
   campaign: Campaign;
   employees: [{id: Number, caught: Boolean}];
+  user: User;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private employeeService: EmployeeService,
     private campaignService: CampaignService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
   ) {
+    this.user = this.authService.currentUserValue;
   }
 
   ngOnInit() {
+
+    this.authService.getCurrent().pipe(first()).subscribe(user => {
+      this.user = user;
+    })
 
     this.campaignService.getCampaign()
       .pipe(first())
