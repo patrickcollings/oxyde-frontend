@@ -12,6 +12,7 @@ export class User {
     emailTested: boolean;
     verified: boolean;
     quizCompleted: boolean;
+    accountDetailsCompleted: boolean;
     quiz: {
         companyName: String;
         companyDomain: String;
