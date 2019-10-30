@@ -19,13 +19,20 @@
               <p class="m-0">Incomplete</p>
             </div>
           </button>
+          <button class="w-100 mb-1 p-1" mat-raised-button [disabled]="user.verified">
+            <div class="container d-flex justify-content-between align-items-center">
+              <p class="m-0">Email Verified</p>
+              <p class="m-0">{{ (user.verified) ? 'Complete' : 'Incomplete' }}</p>
+            </div>
+          </button>
           <button class="w-100 mb-1 p-1" mat-raised-button [routerLink]="['/setup/whitelist']">
             <div class="container d-flex justify-content-between align-items-center">
               <p class="m-0">Whitelisting your email server</p>
               <p class="m-0">{{ (user.whitelistingSetup) ? 'Complete' : 'Incomplete' }}</p>
             </div>
           </button>
-          <button class="w-100 mb-1 p-1" mat-raised-button [disabled]="!user.whitelistingSetup" [routerLink]="['/setup/test']">
+          <button class="w-100 mb-1 p-1" mat-raised-button [disabled]="!user.whitelistingSetup"
+            [routerLink]="['/setup/test']">
             <div class="container d-flex justify-content-between align-items-center">
               <p class="m-0">Test your email server</p>
               <p class="m-0">{{ (user.emailTest) ? 'Complete' : 'Incomplete' }}</p>
