@@ -11,4 +11,19 @@ export class User {
     whitelistingSetup: boolean;
     emailTest: boolean;
     verified: boolean;
+    quiz: {
+        companyName: String;
+        companyDomain: String;
+        managerName: String;
+        businessSector: String;
+        difficulty: String;
+        officeHours: Array<any>;
+        employeeScammedBefore: Boolean;
+        employeeGoodTechnicalSkills: Boolean;
+        smallBusiness: Boolean;
+        mediumBusiness: Boolean;
+        largeBusiness: Boolean;
+        techDepartment: Boolean;
+        emailProvider: Boolean;
+    }
 }

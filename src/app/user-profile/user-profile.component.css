@@ -1,0 +1,11 @@
+.complete {
+    color: grey;
+}
+
+.checklist-item:hover {
+    cursor: pointer;
+}
+
+.selected {
+    font-weight: bold;
+}

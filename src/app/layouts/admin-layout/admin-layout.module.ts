@@ -37,6 +37,7 @@ import { TrainingComponent } from '../../training/training.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { WhitelistFormComponent } from '../../setup/whitelist-form/whitelist-form.component';
 import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-test.component';
+import { AccountDetailsComponent } from '../../user-profile/account-details/account-details.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +74,8 @@ import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-tes
     CreateCampaignComponent,
     SetupComponent,
     WhitelistFormComponent,
-    WhitelistTestComponent
+    WhitelistTestComponent,
+    AccountDetailsComponent
   ],
   providers: [
   ]

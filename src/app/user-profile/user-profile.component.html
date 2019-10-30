@@ -1,48 +1,81 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Your Profile</h4>
-                      <p class="card-category">Complete your profile</p>
-                  </div>
-                  <div class="card-body">
-                    <div *ngIf="!show">
-                      <p>Welcome to Oxyde. In order to use our platform you must first setup your account.
-                        This will ensure that we provide the best results for you and ensures that all of our emails
-                        make it into your employees accounts. This will take about 10 minutes total depending on your 
-                        choice of mail server.
-                      </p>
-                    </div>
-                    <div *ngIf="show === 'verify'">
-                      <p>Please verify your account by opening the email we sent your account when you registered. To send another click here.</p>
-                    </div>
-                    <app-whitelist-test *ngIf="show === 'whitelistTest'"></app-whitelist-test>
-                    <app-whitelist-form *ngIf="show === 'whitelistForm'"></app-whitelist-form>
-                  </div>
-              </div>
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-category">Welcome to your account</h4>
           </div>
-          <div class="col-md-4">
-              <div class="card card-profile">
-                  <!-- <div class="card-avatar">
-                      <a href="javascript:void(0)">
-                          <img class="img" src="./assets/img/faces/marc.jpg" />
-                      </a>
-                  </div> -->
-                  <div class="card-body">
-                      <!-- <h6 class="card-category text-gray">Patrick Collings</h6> -->
-                      <h4 class="card-title font-weight-bold">Checklist</h4>
-                      <ol class="pl-0">
-                        <li (click)="show = 'details'" class="d-flex align-items-center justify-content-between">Account Details <i class="material-icons">check_box_outline_blank</i></li>
-                        <li (click)="show = 'verify'" class="d-flex align-items-center justify-content-between">Verify your email <i class="material-icons" *ngIf="!user.verified">check_box_outline_blank</i><i class="material-icons" *ngIf="user.verified">check_box</i></li>
-                        <li (click)="show = 'whitelistForm'" class="d-flex align-items-center justify-content-between">Whitelist Wizard <i class="material-icons">check_box_outline_blank</i></li>
-                        <li (click)="show = 'whitelistTest'" class="d-flex align-items-center justify-content-between">Test your server <i class="material-icons">check_box_outline_blank</i></li>
-                      </ol>
-                      <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round" disabled>Incomplete</a> -->
-                  </div>
-              </div>
+          <div class="card-body">
+            <p><span class="font-weight-bold">Please read this notice: </span>Here you will find all the information relating to your account. In order to start running campaigns you
+              must complete all
+              the sections below, enabling us to run better campaigns in the future.
+            </p>
+            <p>In order to guarantee that our campaigns reach your employees we ask that you whitelist our servers on
+              your email provider.
+              This ensures we can focus on creating the best content possible for your employees.
+            </p>
           </div>
+        </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card card-profile">
+          <div class="card-body">
+            <!-- <h6 class="card-category text-gray">Patrick Collings</h6> -->
+            <h4 class="card-title font-weight-bold">Progress</h4>
+            <ol class="pl-0">
+              <li [class.complete]="" [class.selected]="show === Display.Details" (click)="show = Display.Details"
+                class="checklist-item d-flex align-items-center justify-content-between">
+                Account Details <i class="material-icons">check_box_outline_blank</i></li>
+              <li [class.complete]="user.verified" [class.selected]="show === Display.Verify"
+                (click)="show = Display.Verify"
+                class="checklist-item d-flex align-items-center justify-content-between">Verify your email <i
+                  class="material-icons" *ngIf="!user.verified">check_box_outline_blank</i><i class="material-icons"
+                  *ngIf="user.verified">check_box</i></li>
+              <li [class.complete]="" [class.selected]="show === Display.Whitelist" (click)="show = Display.Whitelist"
+                class="checklist-item d-flex align-items-center justify-content-between">Whitelist
+                Wizard <i class="material-icons">check_box_outline_blank</i></li>
+              <li [class.complete]="" [class.selected]="show === Display.Test" (click)="show = Display.Test"
+                class="checklist-item d-flex align-items-center justify-content-between">Test your
+                email <i class="material-icons">check_box_outline_blank</i></li>
+            </ol>
+            <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round" disabled>Incomplete</a> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Company Details</h4>
+          </div>
+          <div class="card-body">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Verify Your Email</h4>
+          </div>
+          <div class="card-body">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Whitelist our servers</h4>
+          </div>
+          <div class="card-body">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Run a test campaign</h4>
+          </div>
+          <div class="card-body">
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

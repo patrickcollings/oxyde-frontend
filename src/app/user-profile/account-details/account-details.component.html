@@ -1,0 +1,58 @@
+<form [formGroup]="quizForm">
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Company Name" type="text" formControlName="companyName" class="" />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Company Domain" type="text" formControlName="companyDomain" class="" />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Manager Name" type="text" formControlName="managerName" class="" />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-select placeholder="Business Sector" formControlName="sector">
+      <mat-option *ngFor="let option of sectorOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-select placeholder="Email Provider" formControlName="emailProvider">
+      <mat-option *ngFor="let option of emailProviderOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <p>Difficulty</p>
+  <ng5-slider class="range-slider" [options]="sliderDifficultyOptions" formControlName="difficulty">
+  </ng5-slider>
+  <p>Office Hours</p>
+  <ng5-slider class="range-slider" [options]="sliderOptions" formControlName="officeHours">
+  </ng5-slider>
+  <mat-divider></mat-divider>
+  <div class="quiz-questions">
+    <p>Has an employee fallen for a phishing scam before?</p>
+    <mat-button-toggle-group formControlName="scammedBefore" aria-label="Font Style">
+      <mat-button-toggle value="false">No</mat-button-toggle>
+      <mat-button-toggle value="true">Yes</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="quiz-questions">
+    <p>Do your employees have good technical skills?</p>
+    <mat-button-toggle-group formControlName="technicalSkills" aria-label="Font Style">
+      <mat-button-toggle value="false">No</mat-button-toggle>
+      <mat-button-toggle value="true">Yes</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="quiz-questions">
+    <p>Are you a small/medium sized business?</p>
+    <mat-button-toggle-group formControlName="sme" aria-label="Font Style">
+      <mat-button-toggle value="false">No</mat-button-toggle>
+      <mat-button-toggle value="true">Yes</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="quiz-questions">
+    <p>Do you have a tech department?</p>
+    <mat-button-toggle-group formControlName="techDepartment" aria-label="Font Style">
+      <mat-button-toggle value="false">No</mat-button-toggle>
+      <mat-button-toggle value="true">Yes</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <button mat-raised-button>Update</button>
+</form>
