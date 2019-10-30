@@ -30,9 +30,9 @@ export class WhitelistTestComponent implements OnInit {
   }
 
   complete() {
-    this.userService.updateEmailTesting(true).pipe(first()).subscribe(res => {
-      this.router.navigate(['/setup']);
-    })
+    // this.userService.updateEmailTesting(true).pipe(first()).subscribe(res => {
+    //   this.router.navigate(['/setup']);
+    // })
   }
 
 }
