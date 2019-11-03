@@ -17,6 +17,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { EmployeesComponent } from '../../employees/employees.component';
 import { SetupComponent } from '@app/setup/setup.component';
 
+import { MomentPipe } from '@app/_helpers/MomentPipe';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -39,6 +41,8 @@ import { WhitelistFormComponent } from '../../setup/whitelist-form/whitelist-for
 import { WhitelistTestComponent } from '../../setup/whitelist-test/whitelist-test.component';
 import { AccountDetailsComponent } from '../../user-profile/account-details/account-details.component';
 import { WhitelistWizardComponent } from '../../user-profile/whitelist-wizard/whitelist-wizard.component';
+import { PastCampaignsComponent } from '../../campaigns/past-campaigns/past-campaigns.component';
+import { CampaignViewComponent } from '../../campaigns/campaign-view/campaign-view.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -77,7 +81,10 @@ import { WhitelistWizardComponent } from '../../user-profile/whitelist-wizard/wh
     WhitelistFormComponent,
     WhitelistTestComponent,
     AccountDetailsComponent,
-    WhitelistWizardComponent
+    WhitelistWizardComponent,
+    PastCampaignsComponent,
+    CampaignViewComponent,
+    MomentPipe
   ],
   providers: [
   ]

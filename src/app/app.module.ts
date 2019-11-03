@@ -19,6 +19,8 @@ import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+
+import { MomentPipe } from './_helpers/MomentPipe';
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -65,6 +67,7 @@ import { VerifyComponent } from './verify/verify.component';
     SignupComponent,
     LandingPageComponent,
     VerifyComponent,
+    // MomentPipe
   ],
   providers: [
     AuthenticationService,

@@ -16,12 +16,16 @@ import { SetupComponent } from '@app/setup/setup.component';
 import { WhitelistFormComponent } from '@app/setup/whitelist-form/whitelist-form.component';
 import { WhitelistTestComponent } from '@app/setup/whitelist-test/whitelist-test.component';
 import { WhitelistWizardComponent } from '@app/user-profile/whitelist-wizard/whitelist-wizard.component';
+import { PastCampaignsComponent } from '@app/campaigns/past-campaigns/past-campaigns.component';
+import { CampaignViewComponent } from '@app/campaigns/campaign-view/campaign-view.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',                             redirectTo: 'dashboard' },
     { path: 'dashboard',                    component: DashboardComponent },
     { path: 'campaigns',                    component: CampaignsComponent },
     { path: 'campaigns/create',             component: CreateCampaignComponent },
+    { path: 'campaigns/past',               component: PastCampaignsComponent },
+    { path: 'campaigns/view/:id',           component: CampaignViewComponent },
     { path: 'employees',                    component: EmployeesComponent },
     { path: 'reports',                      component: ReportsComponent },
     { path: 'training',                     component: TrainingComponent },

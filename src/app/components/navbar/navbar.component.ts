@@ -115,6 +115,19 @@ export class NavbarComponent implements OnInit {
           titlee = titlee.slice( 1 );
       }
 
+      console.log(titlee);
+
+      // Remove leading /
+      titlee = titlee.slice(1);
+
+      // If url path
+      if (titlee.indexOf('/') > 0) {
+        titlee = titlee.substring(0, titlee.indexOf('/'));
+      }
+
+      titlee = '/' + titlee;
+
+
       for(var item = 0; item < this.listTitles.length; item++){
           if(this.listTitles[item].path === titlee){
               return this.listTitles[item].title;

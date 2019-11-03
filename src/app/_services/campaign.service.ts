@@ -27,6 +27,14 @@ export class CampaignService {
         return this.http.get<Campaign>(`${environment.apiUrl}/manager/campaign`);
     }  
 
+    public getCampaignById(id) {
+        return this.http.get<Campaign>(`${environment.apiUrl}/campaign/${id}`);
+    }
+
+    public getPastCampaigns() {
+        return this.http.get<Campaign[]>(`${environment.apiUrl}/manager/campaign/past`);
+    }
+
     public removeCampaign(id: number) {
         console.log('Removing campaign:' + id);
         return this.http.delete(`${environment.apiUrl}/campaign/${id}`);
