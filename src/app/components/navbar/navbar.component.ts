@@ -115,7 +115,7 @@ export class NavbarComponent implements OnInit {
           titlee = titlee.slice( 1 );
       }
 
-      console.log(titlee);
+    //   console.log(titlee);
 
       // Remove leading /
       titlee = titlee.slice(1);
