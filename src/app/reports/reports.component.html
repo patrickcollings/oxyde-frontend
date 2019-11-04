@@ -1,12 +1,16 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-info">
         <h4 class="card-title">Reports</h4>
         <p class="card-category">Info below</p>
       </div>
       <div class="card-body">
-        <p>Coming soon..</p>
+        <div *ngFor="let campaign of campaigns" class="d-flex justify-content-between align-items-center">
+          <h3 class="m-2">{{campaign.name}}</h3>
+          <p class="flex-grow-1 m-0 ml-3 text-left">{{campaign.endTime | dateFormat: 'DD/MM/YYYY, HH:mm'}}</p>
+          <button mat-raised-button (click)="download(campaign._id)">Download Report</button>
+        </div>
       </div>
     </div>
   </div>

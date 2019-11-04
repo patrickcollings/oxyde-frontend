@@ -31,4 +31,8 @@ export class CampaignViewComponent implements OnInit {
     })
   }
 
+  download() {
+    this.campaignService.downloadReport(this.campaign._id);
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Employee } from './employee';
 
 export class Campaign { 
-    name: String;
+    name: string;
     length: Number;
     employees: [{
         id: Number,
@@ -10,7 +10,7 @@ export class Campaign {
     }];
     phished: Number;
     avoided: Number;
-    domain: String;
-    emailProvider: String;
-    _id: number;
+    domain: string;
+    emailProvider: string;
+    _id: string;
 }
