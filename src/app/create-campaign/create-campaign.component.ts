@@ -217,6 +217,12 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Get latest user
+    this.authenticationService.getCurrent().pipe(first()).subscribe(user => {
+      this.currentUser = user;
+      this.senderForm.get('domain').setValue(user.quiz.companyDomain);
+      this.senderForm.get('fromName').setValue(user.quiz.managerName);
+    });
     // Get templates
     this.emailService.getTemplates().pipe(first()).subscribe(res => {
       this.templates = res['templates'].templates;
