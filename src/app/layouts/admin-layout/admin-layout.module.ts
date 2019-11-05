@@ -46,6 +46,7 @@ import { AccountDetailsComponent } from '../../user-profile/account-details/acco
 import { WhitelistWizardComponent } from '../../user-profile/whitelist-wizard/whitelist-wizard.component';
 import { PastCampaignsComponent } from '../../campaigns/past-campaigns/past-campaigns.component';
 import { CampaignViewComponent } from '../../campaigns/campaign-view/campaign-view.component';
+import { ChangePasswordComponent } from '../../user-profile/change-password/change-password.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -89,7 +90,8 @@ import { CampaignViewComponent } from '../../campaigns/campaign-view/campaign-vi
     WhitelistWizardComponent,
     PastCampaignsComponent,
     CampaignViewComponent,
-    MomentPipe
+    MomentPipe,
+    ChangePasswordComponent
   ],
   providers: [
   ]

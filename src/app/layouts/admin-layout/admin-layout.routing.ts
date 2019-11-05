@@ -18,6 +18,7 @@ import { WhitelistTestComponent } from '@app/setup/whitelist-test/whitelist-test
 import { WhitelistWizardComponent } from '@app/user-profile/whitelist-wizard/whitelist-wizard.component';
 import { PastCampaignsComponent } from '@app/campaigns/past-campaigns/past-campaigns.component';
 import { CampaignViewComponent } from '@app/campaigns/campaign-view/campaign-view.component';
+import { ChangePasswordComponent } from '@app/user-profile/change-password/change-password.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',                             redirectTo: 'dashboard' },
@@ -39,4 +40,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'setup/whitelist',              component: WhitelistFormComponent },
     { path: 'setup/test',                   component: WhitelistTestComponent },
     { path: 'user-profile/whitelist',       component: WhitelistWizardComponent },
+    { path: 'user-profile/password',        component: ChangePasswordComponent },
 ];

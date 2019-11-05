@@ -43,6 +43,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { VerifyComponent } from './verify/verify.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -68,6 +70,8 @@ import { VerifyComponent } from './verify/verify.component';
     SignupComponent,
     LandingPageComponent,
     VerifyComponent,
+    PasswordResetComponent,
+    NewPasswordComponent,
     // MomentPipe
   ],
   providers: [

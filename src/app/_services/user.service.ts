@@ -36,4 +36,16 @@ export class UserService {
     updateQuiz(quiz: object) {
         return this.http.put(`${environment.apiUrl}/manager/current`, { quiz });
     }
+
+    updatePassword(oldPassword: string, newPassword: string) {
+        return this.http.put(`${environment.apiUrl}/manager/updatepassword`, { oldPassword, newPassword });
+    }
+
+    resetPassword(email: string) {
+        return this.http.post(`${environment.apiUrl}/manager/reset_password`, { email })
+    }
+
+    newPassword(password: string, token: string) {
+        return this.http.post(`${environment.apiUrl}/manager/new_password`, { password, token })
+    }
 }
