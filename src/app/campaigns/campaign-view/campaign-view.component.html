@@ -22,7 +22,14 @@
                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Start Date</h5>
-                  <p class="font-weight-bold" class="font-weight-bold">{{ campaign.createdDate | date }}</p>
+                  <p class="font-weight-bold" class="font-weight-bold">{{ campaign.startTime | date }}</p>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                  <h5>End Date</h5>
+                  <p class="font-weight-bold" class="font-weight-bold">{{ campaign.endTime | date }}</p>
                 </div>
               </mat-list-item>
               <mat-list-item>
@@ -55,51 +62,33 @@
           </div>
           <div class="card-body">
             <mat-list>
-              <h3 mat-subheader>Score</h3>
+              <!-- <h3 mat-subheader>Score</h3>
               <mat-list-item>
-                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Average Employee Score</h5>
                   <p class="font-weight-bold" class="font-weight-bold">64%</p>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Company Score</h5>
                   <p class="font-weight-bold">74%</p>
                 </div>
               </mat-list-item>
-              <mat-divider></mat-divider>
-              <h3 mat-subheader>Duration</h3>
-              <mat-list-item>
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                  <h5>Time remaining</h5>
-                  <p class="font-weight-bold">3 weeks</p>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                  <h5>Time Passed</h5>
-                  <p class="font-weight-bold">17 weeks</p>
-                </div>
-              </mat-list-item>
-              <mat-divider></mat-divider>
+              <mat-divider></mat-divider> -->
               <h3 mat-subheader>Employees</h3>
               <mat-list-item>
                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
-                  <h5>Total emails caught</h5>
-                  <p class="font-weight-bold">18</p>
+                  <h5>Total links opened</h5>
+                  <p class="font-weight-bold">{{ campaign.report.totalOpenedLinks }}</p>
                 </div>
               </mat-list-item>
               <mat-list-item>
                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
-                  <h5>Total emails evaded</h5>
-                  <p class="font-weight-bold">7</p>
+                  <h5>Total employees caught</h5>
+                  <p class="font-weight-bold">{{ campaign.report.totalEmployeesCaught }}</p>
                 </div>
               </mat-list-item>
             </mat-list>

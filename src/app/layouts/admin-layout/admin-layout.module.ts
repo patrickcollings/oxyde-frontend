@@ -19,6 +19,8 @@ import { SetupComponent } from '@app/setup/setup.component';
 
 import { MomentPipe } from '@app/_helpers/MomentPipe';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -30,7 +32,8 @@ import {
   MatSliderModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatIconModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
@@ -62,7 +65,9 @@ import { CampaignViewComponent } from '../../campaigns/campaign-view/campaign-vi
     MatButtonToggleModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgxChartsModule,
+    MatIconModule
   ],
   declarations: [
     CampaignsComponent,

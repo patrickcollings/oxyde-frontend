@@ -6,6 +6,10 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import { User, Campaign, Employee } from '@app/_models';
 import { first } from 'rxjs/operators';
 
+import * as moment from 'moment';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,166 +17,94 @@ import { first } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
 
+  // Charts
+  single: any[];
+  multi: any[];
+
+  view: any[] = [700, 400];
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = '';
+  showYAxisLabel = true;
+  yAxisLabel = '% of Employees';
+
+  // colorScheme = {
+  // domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  // };
+
+  // /Charts
+
   user: User;
   campaign: Campaign;
   employees = [];
+
+  lastCampaign: Campaign;
+
+  timeSinceUpdate: number;
+  timeRemaining: number;
 
   constructor(
     private authService: AuthenticationService,
     private campaignService: CampaignService,
     private employeeService: EmployeeService
-  ) { 
+  ) {
     this.user = this.authService.currentUserValue;
+    this.single = [];
   }
 
-
-  startAnimationForLineChart(chart) {
-    let seq: any, delays: any, durations: any;
-    seq = 0;
-    delays = 80;
-    durations = 500;
-
-    chart.on('draw', function (data) {
-      if (data.type === 'line' || data.type === 'area') {
-        data.element.animate({
-          d: {
-            begin: 600,
-            dur: 700,
-            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-            to: data.path.clone().stringify(),
-            easing: Chartist.Svg.Easing.easeOutQuint
-          }
-        });
-      } else if (data.type === 'point') {
-        seq++;
-        data.element.animate({
-          opacity: {
-            begin: seq * delays,
-            dur: durations,
-            from: 0,
-            to: 1,
-            easing: 'ease'
-          }
-        });
-      }
-    });
-
-    seq = 0;
-  };
-  startAnimationForBarChart(chart) {
-    let seq2: any, delays2: any, durations2: any;
-
-    seq2 = 0;
-    delays2 = 80;
-    durations2 = 500;
-    chart.on('draw', function (data) {
-      if (data.type === 'bar') {
-        seq2++;
-        data.element.animate({
-          opacity: {
-            begin: seq2 * delays2,
-            dur: durations2,
-            from: 0,
-            to: 1,
-            easing: 'ease'
-          }
-        });
-      }
-    });
-
-    seq2 = 0;
-  };
-
   ngOnInit() {
-    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-    const dataDailySalesChart: any = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      series: [
-        [12, 17, 7, 17, 23, 18, 38]
-      ]
-    };
-
-    const optionsDailySalesChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    }
-
-
-
-
-    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    const dataCompletedTasksChart: any = {
-      labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-      series: [
-        [230, 750, 450, 300, 280, 240, 200, 190]
-      ]
-    };
-
-    const optionsCompletedTasksChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    }
-
-
-
-
-
-    /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-      ]
-    };
-    var optionswebsiteViewsChart = {
-      axisX: {
-        showGrid: false
-      },
-      low: 0,
-      high: 1000,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
 
     this.authService.getCurrent().pipe(first()).subscribe(user => {
       this.user = user;
+
+      if (user.completedCampaigns.length > 0) {
+        // Get last completed campaign.
+        let campaignId = user.completedCampaigns[user.completedCampaigns.length - 1];
+        this.campaignService.getCampaignById(campaignId).pipe(first()).subscribe(campaign => this.lastCampaign = campaign);
+      }
     })
 
-    this.campaignService.getCampaign().pipe(first()).subscribe(res => {
-      this.campaign = res;
+    this.campaignService.getCampaign().pipe(first()).subscribe(campaign => {
+      this.campaign = campaign;
 
       // If campaign found then create charts
       if (this.campaign) {
-        // Create sales chart      
-        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-        this.startAnimationForLineChart(dailySalesChart);
-        // Create completed chart
-        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-        this.startAnimationForLineChart(completedTasksChart);
-        // Create view chart
-        var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-        this.startAnimationForBarChart(websiteViewsChart);
+        // Create bar charts
+        console.log(this.campaign);
+        this.single = [{
+          "name": "No Engagement",
+          "value": this.campaign.report.percentageNoEngagement
+        },
+        {
+          "name": 'Link Opened',
+          "value": this.campaign.report.percentageLinksOpened
+        },
+        {
+          "name": 'Caught',
+          "value": this.campaign.report.percentageCaught
+        }]
+
+        console.log(this.campaign.report.updated);
+
+        // Get timeSinceUpdate
+        let lastUpdate = moment(this.campaign.report.updated);
+        let now = moment(new Date());
+        let duration = moment.duration(now.diff(lastUpdate));
+        let hours = duration.asHours();
+        console.log(hours);
+        this.timeSinceUpdate = Math.floor(hours);
+
+        // Get time remaining
+        let endTime = moment(this.campaign.endTime);
+        duration = moment.duration(endTime.diff(now));
+        let days = duration.asHours();
+        console.log(days);
+        this.timeRemaining = Math.floor(days); 
       }
     })
 
@@ -181,6 +113,11 @@ export class DashboardComponent implements OnInit {
       console.log(this.employees);
     })
 
+  }
+
+  onResize(event) {
+    const containerWidth = document.getElementById("chart-container").offsetWidth;
+    this.view = [event.target.innerWidth, 400];
   }
 
 }

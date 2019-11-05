@@ -13,6 +13,7 @@ export class User {
     verified: boolean;
     quizCompleted: boolean;
     accountDetailsCompleted: boolean;
+    completedCampaigns: string[];
     quiz: {
         companyName: String;
         companyDomain: String;

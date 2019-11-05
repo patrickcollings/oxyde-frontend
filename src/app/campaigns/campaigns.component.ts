@@ -9,6 +9,8 @@ import { AlertService } from '@app/_services/alert.service';
 import { Router } from '@angular/router';
 import { UserService } from '@app/_services/user.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
@@ -17,8 +19,10 @@ import { UserService } from '@app/_services/user.service';
 export class CampaignsComponent implements OnInit {
 
   campaign: Campaign;
-  employees: [{id: Number, caught: Boolean}];
+  employees: [{ id: Number, caught: Boolean }];
   user: User;
+
+  timeRemaining: Number;
 
   constructor(
     private authService: AuthenticationService,
@@ -45,6 +49,14 @@ export class CampaignsComponent implements OnInit {
           this.campaign = campaign;
           this.employees = campaign.employees;
           console.log(this.employees);
+          // Remaining time
+          // Get time remaining
+          let endTime = moment(this.campaign.endTime);
+          let now = moment();
+          let duration = moment.duration(endTime.diff(now));
+          let days = duration.asHours();
+          console.log(days);
+          this.timeRemaining = Math.floor(days);
         }
       );
   }

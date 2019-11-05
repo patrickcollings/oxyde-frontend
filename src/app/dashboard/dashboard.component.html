@@ -23,7 +23,7 @@
         </div>
 
         <div class="row" [hidden]="!campaign">
-            <div class="col-md-4">
+            <!-- <div class="col-md-6">
                 <div class="card card-chart">
                     <div class="card-header card-header-success">
                         <div class="ct-chart" id="dailySalesChart"></div>
@@ -40,35 +40,27 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-chart">
+            </div> -->
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header card-header-warning">
-                        <div class="ct-chart" id="websiteViewsChart"></div>
+                        <h3 class="card-title">Emails</h3>
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">Emails failed</h4>
-                        <p class="card-category">Last Campaign Performance</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">access_time</i> updated 4 minutes ago
+                        <div>
+
+                        </div>
+                        <div class="chart-container">
+                            <ngx-charts-bar-vertical [results]="single" [gradient]="gradient" [xAxis]="showXAxis"
+                                [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                                [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+                                [barPadding]="120" (select)="onSelect($event)">
+                            </ngx-charts-bar-vertical>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-chart">
-                    <div class="card-header card-header-danger">
-                        <div class="ct-chart" id="completedTasksChart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Completed Training Modules</h4>
-                        <p class="card-category">Module Performance</p>
-                    </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">access_time</i> updated 2 days ago
+                            <!-- <i class="material-icons">access_time</i> updated 4 minutes ago -->
                         </div>
                     </div>
                 </div>
@@ -76,7 +68,7 @@
         </div>
 
         <div class="row" [hidden]="!user.accountDetailsCompleted">
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
@@ -91,39 +83,41 @@
                             <mat-list-item>
                                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                                 <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Company Score</h5>
-                                    <p class="font-weight-bold" class="font-weight-bold">64%</p>
+                                    <h5>Time Remaining</h5>
+                                    <p class="font-weight-bold" class="font-weight-bold">{{ timeRemaining }} {{ (timeRemaining === 1) ? 'day' : 'days' }}</p>
                                 </div>
                             </mat-list-item>
                             <mat-list-item>
                                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                                 <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Time remaining</h5>
-                                    <p class="font-weight-bold">7 weeks</p>
+                                    <h5>Engagement</h5>
+                                    <p class="font-weight-bold">{{ campaign.report.percentageLinksOpened }}%</p>
                                 </div>
                             </mat-list-item>
                             <mat-list-item>
                                 <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                                 <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Average employee score</h5>
-                                    <p class="font-weight-bold">86%</p>
+                                    <h5>Last Engagement</h5>
+                                    <p class="font-weight-bold">{{ timeSinceUpdate }} {{ (timeSinceUpdate === 1) ? 'hour' : 'hours' }} ago</p>
                                 </div>
                             </mat-list-item>
                         </mat-list>
                     </div>
+                    <div class="card-body" *ngIf="!campaign && lastCampaign">
+                        <p>Campaign, {{ lastCampaign.name }}, finished on {{ lastCampaign.endTime | date:'fullDate' }}.</p>
+                        <button mat-raised-button [routerLink]="['/campaigns/view/', lastCampaign._id]">View your campaign results here.</button>
+                    </div>
                     <div class="card-footer" *ngIf="!campaign">
                         <div class="stats">
                             <!-- <i class="material-icons text-danger">warning</i> -->
-                            <p>No campaign started. Create one <a [routerLink]="['/campaigns/create']">here.</a></p>
+                            <p>Start a new campaign <a [routerLink]="['/campaigns/create']">here.</a></p>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <div class="col-lg-6 col-md-12 col-sm-12">
-
-                <!-- Campaign Metric Card -->
+            <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
@@ -133,39 +127,9 @@
                         <h5 class="card-title">Employee Summary</h5>
                     </div>
                     <div class="card-body" *ngIf="employees.length > 0">
-                        <mat-list>
-                            <mat-list-item>
-                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Average Score</h5>
-                                    <p class="font-weight-bold" class="font-weight-bold">64%</p>
-                                </div>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Total emails caught</h5>
-                                    <p class="font-weight-bold">74</p>
-                                </div>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5>Total emails evaded</h5>
-                                    <p class="font-weight-bold">15</p>
-                                </div>
-                            </mat-list-item>
-                        </mat-list>
                     </div>
-                    <div class="card-footer" *ngIf="employees.length === 0">
-                        <div class="stats">
-                            <!-- <i class="material-icons text-danger">warning</i> -->
-                            <p>No employees found. Add them <a [routerLink]="['/employees']">here.</a></p>
-                        </div>
-                    </div>
-                    <!-- /Campaign Metric Card -->
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>

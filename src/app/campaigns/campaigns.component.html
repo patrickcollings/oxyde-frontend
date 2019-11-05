@@ -6,14 +6,18 @@
         <div class="card">
           <div class="card-header card-header-info campaign-header">
             <h4 class="card-title campaign-title">Current Campaign</h4>
-            <button mat-button *ngIf="!campaign && user.accountDetailsCompleted" (click)="createCampaign()">Create Campaign</button>
+            <button mat-button *ngIf="!campaign && user.accountDetailsCompleted" (click)="createCampaign()">Create
+              Campaign</button>
             <button mat-button *ngIf="campaign" (click)="removeCampaign()">Remove Campaign</button>
             <button mat-button [routerLink]="['/campaigns/past']">Past Campaigns</button>
           </div>
           <div class="card-body">
-            <h5 *ngIf="!user.accountDetailsCompleted">Your account is not setup yet, please complete your profile before creating a campaign.</h5>
-            <button mat-raised-button *ngIf="!user.accountDetailsCompleted" [routerLink]="['/user-profile']">Complete Profile</button>
-            <h5 *ngIf="!campaign && user.accountDetailsCompleted">No campaigns currently in progress. To start one click <a [routerLink]="['/campaigns/create']">here.</a></h5>
+            <h5 *ngIf="!user.accountDetailsCompleted">Your account is not setup yet, please complete your profile before
+              creating a campaign.</h5>
+            <button mat-raised-button *ngIf="!user.accountDetailsCompleted" [routerLink]="['/user-profile']">Complete
+              Profile</button>
+            <h5 *ngIf="!campaign && user.accountDetailsCompleted">No campaigns currently in progress. To start one click
+              <a [routerLink]="['/campaigns/create']">here.</a></h5>
             <mat-list *ngIf="campaign">
               <h3 mat-subheader>Details</h3>
               <mat-list-item>
@@ -28,6 +32,13 @@
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Start Date</h5>
                   <p class="font-weight-bold" class="font-weight-bold">{{ campaign.createdDate | date }}</p>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                  <h5>End Date</h5>
+                  <p class="font-weight-bold" class="font-weight-bold">{{ campaign.endTime | date }}</p>
                 </div>
               </mat-list-item>
               <mat-list-item>
@@ -60,35 +71,26 @@
           </div>
           <div class="card-body">
             <mat-list>
-              <h3 mat-subheader>Score</h3>
+              <!-- <h3 mat-subheader>Score</h3>
               <mat-list-item>
-                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Average Employee Score</h5>
                   <p class="font-weight-bold" class="font-weight-bold">64%</p>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <!-- <mat-icon mat-list-icon>note</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Company Score</h5>
                   <p class="font-weight-bold">74%</p>
                 </div>
               </mat-list-item>
-              <mat-divider></mat-divider>
+              <mat-divider></mat-divider> -->
               <h3 mat-subheader>Duration</h3>
               <mat-list-item>
                 <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
                 <div class="d-flex w-100 justify-content-between align-items-center">
                   <h5>Time remaining</h5>
-                  <p class="font-weight-bold">3 weeks</p>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                  <h5>Time Passed</h5>
-                  <p class="font-weight-bold">17 weeks</p>
+                  <p class="font-weight-bold">{{ timeRemaining }} {{ (timeRemaining === 1) ? 'day' : 'days' }}</p>
                 </div>
               </mat-list-item>
               <mat-divider></mat-divider>

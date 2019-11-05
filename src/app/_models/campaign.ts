@@ -13,4 +13,12 @@ export class Campaign {
     domain: string;
     emailProvider: string;
     _id: string;
+    report: {
+        percentageNoEngagement: Number;
+        percentageLinksOpened: Number;
+        percentageCaught: Number;
+        updated: Date;
+    };
+    startTime: Date;
+    endTime: Date;
 }

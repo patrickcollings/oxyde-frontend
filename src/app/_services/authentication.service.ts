@@ -41,7 +41,7 @@ export class AuthenticationService {
      * Gets the latest user object and resets localstorage
      */
     getCurrent() {
-        return this.http.get<any>(`${environment.apiUrl}/manager/current`)
+        return this.http.get<User>(`${environment.apiUrl}/manager/current`)
             .pipe(map(user => {
                 user.token = this.currentUserValue.token; // Reuse previous token
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
