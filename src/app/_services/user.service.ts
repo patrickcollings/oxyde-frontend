@@ -26,7 +26,11 @@ export class UserService {
     }
 
     verify(token: string) {
-        return this.http.post(`${environment.apiUrl}/manager/verify`, { token });
+        return this.http.put(`${environment.apiUrl}/manager/verify`, { token });
+    }
+
+    reverify() {
+        return this.http.put(`${environment.apiUrl}/manager/reverify`, {});
     }
 
     updateQuiz(quiz: object) {

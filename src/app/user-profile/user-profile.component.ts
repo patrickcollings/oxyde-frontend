@@ -175,4 +175,8 @@ export class UserProfileComponent implements OnInit {
       })
     })
   }
+
+  sendVerification() {
+    this.userService.reverify().pipe(first()).subscribe(res => console.log(res));
+  }
 }

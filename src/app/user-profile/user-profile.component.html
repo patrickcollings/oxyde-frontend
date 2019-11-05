@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-5">
         <div class="card card-profile">
           <div class="card-body">
             <!-- <h6 class="card-category text-gray">Patrick Collings</h6> -->
@@ -56,12 +56,21 @@
                 Test your email
                 <i class="material-icons" *ngIf="!user.emailTested">check_box_outline_blank</i>
                 <i class="material-icons" *ngIf="user.emailTested">check_box</i>
+              </li>
             </ol>
             <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round" disabled>Incomplete</a> -->
           </div>
         </div>
+        <div class="card card-profile">
+          <div class="card-body">
+            <!-- <h6 class="card-category text-gray">Patrick Collings</h6> -->
+            <h4 class="card-title font-weight-bold">Your Details</h4>
+            <button mat-raised-button>Change Password</button>
+            <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round" disabled>Incomplete</a> -->
+          </div>
+        </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-7">
         <div class="card">
           <div class="card-header" [class.card-header-danger]="!user.quizCompleted"
             [class.card-header-success]="user.quizCompleted">
@@ -135,11 +144,20 @@
             <h4 class="card-category" *ngIf="user.verified">Complete</h4>
           </div>
           <div class="card-body">
-            <p>To use our platform we ask that you verify that you have access to your email provider under your domain.
-              When you registered we
-              sent you an email. Open this and click on the link to verify your account.
-            </p>
-            <p>Not seeing the email? Send it again.</p>
+            <div *ngIf="!user.verified">
+              <p>To use our platform we ask that you verify that you have access to your email provider under your
+                domain.
+                When you registered we
+                sent you an email. Open this and click on the link to verify your account.
+              </p>
+              <div class="d-flex align-items-center">
+                <p class="m-0 mr-4">Not seeing the email? </p>
+                <button mat-raised-button (click)="sendVerification()">Send another.</button>
+              </div>
+            </div>
+            <div *ngIf="user.verified">
+              <p>Your account is verified.</p>
+            </div>
           </div>
         </div>
         <div class="card">
@@ -148,9 +166,11 @@
             <h4 class="card-title">Whitelist our servers</h4>
           </div>
           <div class="card-body">
-            <p>To whitelist our servers use our whitelisting wizard to help guide you the through the process. This will depend on which email provider and
+            <p>To whitelist our servers use our whitelisting wizard to help guide you the through the process. This will
+              depend on which email provider and
               software you use.</p>
-              <p><b>Warning:</b> If you do not whitelist our servers properly then there is a possibility our emails go to your employees spam folder.</p>
+            <p><b>Warning:</b> If you do not whitelist our servers properly then there is a possibility our emails go to
+              your employees spam folder.</p>
             <div class="d-flex justify-content-center">
               <button mat-raised-button [routerLink]="['/user-profile/whitelist']">Begin</button>
               <button mat-raised-button class="ml-3">Complete</button>

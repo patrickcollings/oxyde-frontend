@@ -24,11 +24,13 @@ export class VerifyComponent implements OnInit {
       )
       .subscribe(
         res => { 
+          console.log(res);
           if (res['success']) {
-            this.showMessage = res['message'];
+            this.showMessage = res['msg'];
           } else {
-            this.showMessage = res['message'];
+            this.showMessage = res['msg'];
           }
+          console.log(this.showMessage);
          },
         err => {
           console.log(err);
