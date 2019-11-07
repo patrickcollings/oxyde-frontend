@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const forceSecure = require("force-secure-express");
+
 app.use(forceSecure([
     // "oxydetechnologies.com",
     "dashboard.oxydetechnologies.com"
