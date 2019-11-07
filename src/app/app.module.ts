@@ -39,7 +39,6 @@ import {
   MatSelectModule,
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { VerifyComponent } from './verify/verify.component';
@@ -68,7 +67,6 @@ import { NewPasswordComponent } from './new-password/new-password.component';
     AdminLayoutComponent,
     LoginComponent,
     SignupComponent,
-    LandingPageComponent,
     VerifyComponent,
     PasswordResetComponent,
     NewPasswordComponent,
