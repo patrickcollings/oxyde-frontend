@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 
 app.use(forceSecure([
-    "oxydetechnologies.com",
+    // "oxydetechnologies.com",
     "dashboard.oxydetechnologies.com"
 ]));
 
