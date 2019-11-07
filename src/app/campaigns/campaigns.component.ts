@@ -68,6 +68,13 @@ export class CampaignsComponent implements OnInit {
     });
   }
 
+  endCampaign() {
+    this.campaignService.endCampaign(this.campaign._id).pipe(first()).subscribe(res => {
+      console.log(res);
+      this.campaign = null;
+    })
+  }
+
   createCampaign() {
     this.router.navigateByUrl('campaigns/create');
   }

@@ -52,6 +52,10 @@ export class CampaignService {
         return this.http.delete(`${environment.apiUrl}/campaign/${id}`);
     }
 
+    public endCampaign(id: string) {
+        return this.http.put(`${environment.apiUrl}/campaign/end/${id}`, {});
+    }
+
     public downloadReport(campaignId) {
         this.getReport(campaignId).pipe(first()).subscribe(
           reportBlob => {

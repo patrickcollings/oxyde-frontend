@@ -307,8 +307,8 @@ export class CreateCampaignComponent implements OnInit {
     }
 
     // Calculate end date - for testing use minutes
-    let endTime = moment(startTime).add(detailValue.length, 'minutes');
-    // let endTime = moment(startTime).add(detailValue.length, 'weeks');
+    // let endTime = moment(startTime).add(detailValue.length, 'minutes');
+    let endTime = moment(startTime).add(detailValue.length, 'weeks');
 
     this.campaignService.create(detailValue.campaignName, detailValue.length, employeeValue.employees, startTime,
       senderValue.domain, senderValue.fromName, this.selectedTemplate.id, templateValue, endTime)
