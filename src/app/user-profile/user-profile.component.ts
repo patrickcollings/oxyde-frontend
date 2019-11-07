@@ -149,8 +149,25 @@ export class UserProfileComponent implements OnInit {
   }
 
   sendTest() {
-    console.log('Sending test' + this.email);
-    this.emailService.sendTest(this.email).pipe(first()).subscribe(res => {
+    // Fake dynamic data
+
+
+    // Get quiz details to fill test
+    const params = {
+      email: this.email,
+      domain: 'support@mycompany.com',
+      templateId: 'd-43c472391f0c473e86b52fea734c6390',
+      managerName: this.user.firstName,
+      dynamic_template_data: {
+        corporation: 'mycompany',
+        managerName: this.user.firstName,
+        length: 1,
+        employeeName: 'Mark'
+      }
+    }
+
+    console.log(params);
+    this.emailService.sendEmail(params).pipe(first()).subscribe(res => {
       console.log(res);
     })
   }
