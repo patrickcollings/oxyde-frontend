@@ -11,6 +11,13 @@ import { UserService } from '@app/_services/user.service';
 export class PasswordResetComponent implements OnInit {
 
   form: FormGroup;
+  submitted = false;
+  showError = false;
+  showSuccess = false;
+  errorMsg = '';
+  successMsg = '';
+  loading = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,14 +35,18 @@ export class PasswordResetComponent implements OnInit {
   }
 
   onSubmit(formValue) {
+    this.submitted = true;
+    this.loading = true;
 
     // console.log(this.form.hasError);
     if (this.form.invalid) {
+      this.loading = false;
       return;
     }
     if (formValue.email) {
       this.userService.resetPassword(formValue.email).pipe(first()).subscribe(res => {
         console.log(res);
+        this.loading = false;
       })
     }
   }

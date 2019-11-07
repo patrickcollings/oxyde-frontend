@@ -14,6 +14,13 @@ export class NewPasswordComponent implements OnInit {
   form: FormGroup;
   token: string;
 
+  submitted = false;
+  showError = false;
+  showSuccess = false;
+  errorMsg = '';
+  successMsg = '';
+  loading = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -36,14 +43,18 @@ export class NewPasswordComponent implements OnInit {
   }
 
   onSubmit(formValue) {
+    this.submitted = true;
+    this.loading = true;
 
     // console.log(this.form.hasError);
     if (this.form.invalid) {
+      this.loading = false;
       return;
     }
     if (formValue.password) {
       this.userService.newPassword(formValue.password, this.token).pipe(first()).subscribe(res => {
         console.log(res);
+        this.loading = false;
       })
     }
   }
